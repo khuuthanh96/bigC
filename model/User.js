@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     email: { type: String, require: true, trim: true, unique: true },
     password: { type: String, require: true },
-    name: { type: String, require: true, trim: true },
-    phone: { type: String, trim: true },
+    name: { type: String, require: true, trim: true, minlength: 6, maxlength: 30 },
+    phone: { type: String, trim: true, minLength: 9, maxlength: 12 },
     sex: { type: Boolean },
-    dayOfBirth: { type: Date },
+    dayOfBirth: { type: Date.now },
     address: { type: String, require: true }
 });
 
