@@ -15,7 +15,13 @@ const productSchema = mongoose.Schema({
 const ProductModel = mongoose.model('Product', productSchema);
 
 class Product extends ProductModel {
-
+    static async createProduct(supplier, productLines, name, quantityInStock, price) {
+        const product = new Product({supplier, productLines, name, quantityInStock, price});
+        await product.save()
+        .catch(error => {
+            throw new Error('dupplicate key!');
+        })
+    }
 };
 
 module.exports = Product;

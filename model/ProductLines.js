@@ -4,10 +4,18 @@ const productLinesSchema = mongoose.Schema({
     name: { type: String, require: true, trim: true }
 });
 
-const ProductLinesModel = mongoose.model('Product', productLinesSchema);
+const ProductLinesModel = mongoose.model('ProductLines', productLinesSchema);
 
 class ProductLines extends ProductLinesModel {
-
+    static async createProductLines(name) {
+        const productLines = new ProductLines({name});
+        const error = productLines.validateSync();
+        if(error) throw new Error('Product line info is invalid!');
+        await productLines.save()
+        .catch(error => {
+            throw new Error(error);
+        }) 
+    }
 };
 
 module.exports = ProductLines;
