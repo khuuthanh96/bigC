@@ -1,6 +1,5 @@
 const faker = require('faker');
 const User = require('./model/User');
-const Suppliers = require('./model/Suppliers');
 const ProductLines = require('./model/ProductLines')
 const Product = require('./model/Product');
 const Order = require('./model/Order');
@@ -13,56 +12,41 @@ async function initDatabase() {
             const name = faker.name.findName();
             const address = faker.address.streetAddress();            
 
-            await User.signUp(email, '123', name, address);
+            User.signUp(email, '123', name, address);
         }
     }
-   
-    const supplierCount = await Suppliers.count({});
-    if(supplierCount < 10) {
-        for (let index = 0; index < 10; index++) {
-            const companyName = faker.company.companyName();
-            const phone = faker.phone.phoneNumber();
-            const address = faker.address.streetAddress();
-            const email = faker.internet.email();
-            
-            await Suppliers.createSupplier(companyName, phone, address, email);
-        }
-    }
-
+ 
     const productLinesCount = await ProductLines.count({});
     if(productLinesCount < 4) {
-        await ProductLines.createProductLines('Milk');
-        await ProductLines.createProductLines('Drinks');
-        await ProductLines.createProductLines('Instand Food');
-        await ProductLines.createProductLines('Clothes');      
+        await ProductLines.createProductLines('T-shirt');
+        await ProductLines.createProductLines('Shirt');
+        await ProductLines.createProductLines('Sweater');
+        await ProductLines.createProductLines('Trousers');
+        await ProductLines.createProductLines('Hat');      
     }
 
     const productCount = await Product.count({});
-    if(productCount < 20) {
-        const suppId = "5ae96dd3bf9f590d8a0851f9";
-        const productLine = "5ae96dd3bf9f590d8a0896f2";
+    if(productCount < 30) {
+        ProductLines.find()
+        .then(productlines => {
+            for (let index = 0; index < 10; index++) {
+                const price = faker.random.number(500000);
+                const quantity = faker.random.number(50);
+                const size = 'L';
+                Product.createProduct(productlines[0]._id.toString(), 'AOTHUN' + index, quantity, price, size);
+                Product.createProduct(productlines[1]._id.toString(), 'SOMI' + index, quantity, price, size);
+                Product.createProduct(productlines[2]._id.toString(), 'SWEATER' + index , quantity, price, size);
+            }
 
-        for (let index = 0; index < 20; index++) {
-            const productName = faker.commerce.productName();
-            const price = faker.random.number();
-            const quantity = faker.random.number();
- 
-            await Product.createProduct(suppId, productLine, productName, quantity, price);
-        }
+            for (let index = 0; index < 10; index++) {
+                const price = faker.random.number(800000);
+                const quantity = faker.random.number(30);
+                const size = '32';
+                Product.createProduct(productlines[3]._id.toString(), 'QUAN' + index, quantity, price, size);
+            }
+        })
+
     }
-
-    const orderCount = await Order.count({});
-    if(orderCount < 10) {
-        const listProducts = ["5ae9be8d558f7c112d1c503b", "5ae9be8d558f7c112d1c092b", "5ae9be8d558f7c112d1c599b"];
-        const customerId = "5ae96dd3bf9f590d8a08520d";
-
-        for (let index = 0; index < 10; index++) {
-            const totalPrice = faker.commerce.price();
-            
-            await Order.createOrder(listProducts, listProducts.count, totalPrice, customerId);
-        }
-    }
-
     console.log('Init database finish!');
 }
 

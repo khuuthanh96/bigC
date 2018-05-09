@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     name: { type: String, require: true, trim: true, minlength: 6, maxlength: 30 },
     phone: { type: String, trim: true, minLength: 9, maxlength: 12 },
     sex: { type: Boolean },
-    dayOfBirth: { type: String },
+    dayOfBirth: { type: Date },
     address: { type: String, require: true }
 });
 
