@@ -8,7 +8,7 @@ function getDatabaseUri() {
     return localUri
 }
 
-mongoose.connect(getDatabaseUri(), { useMongoClient: true })
+mongoose.connect(getDatabaseUri())
 .catch(error => {
     console.log(error);
     process.exit(1);

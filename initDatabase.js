@@ -30,11 +30,13 @@ async function initDatabase() {
         ProductLines.find()
         .then(productlines => {
             for (let index = 0; index < 10; index++) {
-                const price = faker.random.number(500000);
                 const quantity = faker.random.number(50);
                 const size = 'L';
+                var price = faker.random.number(200000);
                 Product.createProduct(productlines[0]._id.toString(), 'AOTHUN' + index, quantity, price, size);
+                price = faker.random.number(500000);
                 Product.createProduct(productlines[1]._id.toString(), 'SOMI' + index, quantity, price, size);
+                price = faker.random.number(500000);
                 Product.createProduct(productlines[2]._id.toString(), 'SWEATER' + index , quantity, price, size);
             }
 
