@@ -7,7 +7,7 @@ const localUri = 'mongodb://localhost/bigc';
 function getDatabaseUri() {
     if(process.env.NODE_ENV === 'production') {
         initDatabase();
-        return 'mongodb://eshopper:123321@ds111748.mlab.com:11748/myshop'
+        return 'mongodb://eshopper:123321@ds157682.mlab.com:57682/thanhsuper'
     }
     return localUri
 }
