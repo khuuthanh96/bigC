@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
+const initDatabase = require('./initDatabase');
 
 mongoose.Promise = global.Promise;
 
 const localUri = 'mongodb://localhost/bigc';
 function getDatabaseUri() {
-    if(process.env.NODE_ENV === 'production') return 'mongodb://eshopper:123321@ds111748.mlab.com:11748/myshop'
+    if(process.env.NODE_ENV === 'production') {
+        initDatabase();
+        return 'mongodb://eshopper:123321@ds111748.mlab.com:11748/myshop'
+    }
     return localUri
 }
 
