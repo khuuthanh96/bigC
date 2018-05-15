@@ -18,11 +18,11 @@ async function initDatabase() {
  
     const productLinesCount = await ProductLines.count({});
     if(productLinesCount < 4) {
-        await ProductLines.createProductLines('T-shirt');
-        await ProductLines.createProductLines('Shirt');
-        await ProductLines.createProductLines('Sweater');
-        await ProductLines.createProductLines('Trousers');
-        await ProductLines.createProductLines('Hat');      
+        await ProductLines.createProductLines('tshirt');
+        await ProductLines.createProductLines('shirt');
+        await ProductLines.createProductLines('sweater');
+        await ProductLines.createProductLines('trousers');
+        await ProductLines.createProductLines('hat');      
     }
 
     const productCount = await Product.count({});
@@ -53,3 +53,4 @@ async function initDatabase() {
 }
 
 initDatabase();
+module.exports = initDatabase;
