@@ -2,39 +2,15 @@
     <h2>Category</h2>
     <div class="panel-group category-products" id="accordian">
         <!--category-productsr-->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a href="#">T-Shirt</h4>
+        <% for (let i = 0; i < category.length; i++) {%>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href="/shop/<%= category[i].name %>/1"><%= category[i].name %>
+                    </h4>
+                </div>
             </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a href="#">Shirt</h4>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a href="#">Sweater</h4>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a href="#">Trousers</a>
-                </h4>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a href="#">Hat</a>
-                </h4>
-            </div>
-        </div>
+        <% }; %>
     </div>
     <!--/category-productsr-->
 <!-- /category -->

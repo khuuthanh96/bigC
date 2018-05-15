@@ -11,9 +11,9 @@ router.get('/', (req, res, next) => {
 
 router.get('/product/:id', (req, res, next) => {
     Product.findById(req.params.id)
-        .then(product => {
-            res.render('page/productDetails', { product });
-        })
+    .then(product => {
+        res.render('page/productDetails', { product });
+    })
 });
 
 router.get('/:productline', (req, res, next) => {
@@ -22,27 +22,30 @@ router.get('/:productline', (req, res, next) => {
 });
 
 router.get('/:productline/:page', (req, res, next) => {
-    const perPage = 24;
+    const perPage = 9;
     const page = req.params.page || 1;
     const productline = req.params.productline;
 
     ProductLines.find({ name: productline })
-        .then(productLine => {
-            Product.find({ productLines: productLine[0]._id })
-                .limit(perPage)
-                .skip((perPage * page) - perPage)
-                .then(products => {
-                    res.render('page/shop', {
-                        products,
-                        current: page,
-                        pages: Math.ceil(products.length / perPage),
-                        productlines: productLine[0].name
-                    })
+    .then(productLine => {
+        Product.find({ productLines: productLine[0]._id })
+        .limit(perPage)
+        .skip((perPage * page) - perPage)
+        .then(products => {
+            Product.count({ productLines: productLine[0]._id })
+            .then(length => {
+                res.render('page/shop', {
+                    products,
+                    current: page,
+                    pages: Math.ceil(length / perPage),
+                    productlines: productLine[0].name
                 })
+            })
         })
-        .catch(err => {
-            return next(err);
-        });
+    })
+    .catch(err => {
+        return next(err);
+    });
 });
 
 module.exports = router;
