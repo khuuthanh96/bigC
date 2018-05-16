@@ -8,7 +8,14 @@ const ProductLines = require('./model/ProductLines');
 require('./db');
 const initDatabase = require('./initDatabase');
 initDatabase()
-.then(msg => console.log(msg))
+.then(msg => {
+    console.log(msg);
+    ProductLines.find()
+    .then(list => {
+        let listName = [];
+        app.locals.category = listName.concat(list);
+    });
+})
 .catch(err => console.log(err));
 
 const indexRouter = require('./routes/index');
@@ -31,14 +38,6 @@ app.use('/stylesheets',express.static(__dirname + 'public/stylesheets'));
 app.use('/font',express.static(__dirname + 'public/font'));
 app.use('/javascripts',express.static(__dirname + 'public/javascripts'));
 app.use('/images',express.static(__dirname + 'public/images'));
-
-
-ProductLines.find()
-.then(list => {
-    let listName = [];
-    app.locals.category = listName.concat(list);
-    console.log(app.locals.category);
-});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
