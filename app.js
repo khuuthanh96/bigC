@@ -6,6 +6,10 @@ const logger = require('morgan');
 const ProductLines = require('./model/ProductLines');
 
 require('./db');
+const initDatabase = require('./initDatabase');
+initDatabase()
+.then(msg => console.log(msg))
+.catch(err => console.log(err));
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

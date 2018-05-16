@@ -9,12 +9,12 @@ router.get('/', function(req, res, next) {
   res.redirect('/shop');
 });
 
-router.get('/initfakedb', (req, res, next) => {
-  initDatabase()
-  .then(msg => {
-    res.redirect('/shop');    
-  })
-  .catch(err => console.log(err));
-});
+// router.get('/initfakedb', (req, res, next) => {
+//   initDatabase()
+//   .then(msg => {
+//     res.redirect('/shop');    
+//   })
+//   .catch(err => console.log(err));
+// });
 
 module.exports = router;

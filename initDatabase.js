@@ -29,7 +29,7 @@ async function initDatabase() {
         }
 
         const productCount = await Product.count({});
-        if(productCount < 30) {
+        if(productCount < 5) {
             ProductLines.find()
             .then(productlines => {
                 for (let index = 0; index < 5; index++) {
