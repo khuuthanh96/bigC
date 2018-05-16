@@ -27,7 +27,8 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-										<img src="images/shop/product12.jpg" alt="" />
+										<% console.log(e.images[0]) %>
+										<img src="<%= e.images[0] %>" alt="" />
 										<h2><%= e.price %>₫</h2>
 										<p><%= e.name %></p>
 										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>

@@ -25,41 +25,41 @@
 						<!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="product-details/1.jpg" alt="" />
+								<img src="<%= product.images[0] %>" alt="" />
 							</div>
 						</div>
 
-					</div>
-					<div class="col-sm-7">
-						<div class="product-information">
-							<!--/product-information-->
-							<img src="product-details/new.jpg" class="newarrival" alt="" />
-							<h2>
-								<%= product.name %>
-							</h2>
-							<img src="product-details/rating.png" alt="" />
-							<span>
+
+						<div class="col-sm-6">
+							<div class="product-information">
+								<!--/product-information-->
+								<h2>
+									<%= product.name %>
+								</h2>
+								<img src="http://localhost3000/product-details/rating.png" alt="" />
 								<span>
-									<%= product.price %> ₫</span>
-								<label>Quantity:</label>
-								<input type="text" value="1" />
-								<button type="button" class="btn btn-fefault cart">
-									<i class="fa fa-shopping-cart"></i>
-									Add to cart
-								</button>
-							</span>
-							<p>
-								<b>Availability:</b>
-								<% if (product.quantityInStock > 0) { %>
-									In Stock
-								<% } else { %>
-									Out of Stock
-								<% } %>
-							</p>
-							<a href="">
-								<img src="product-details/share.png" class="share img-responsive" alt="" />
-							</a>
-						</div>
+									<span><%= product.price %> ₫</span>
+									<label>Quantity:</label>
+									<input type="text" value="1" />
+								</span>
+								<p>
+									<b>Availability:</b>
+									<% if (product.quantityInStock > 0) { %>
+										In Stock
+									<% } else { %>
+										Out of Stock
+									<% } %>
+
+									<button type="button" class="btn btn-fefault cart">
+										<i class="fa fa-shopping-cart"></i>
+										Add to cart
+									</button>
+								</p>
+								<a href="">
+									<img src="http://localhost3000/product-details/share.png" class="share img-responsive" alt="" />
+								</a>
+							</div>
+							
 						<!--/product-information-->
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 									</span>
 									<textarea name=""></textarea>
 									<b>Rating: </b>
-									<img src="product-details/rating.png" alt="" />
+									<img src="http://localhost3000/product-details/rating.png" alt="" />
 									<button type="button" class="btn btn-default pull-right">
 										Submit
 									</button>

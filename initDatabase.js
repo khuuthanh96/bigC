@@ -4,6 +4,8 @@ const ProductLines = require('./model/ProductLines')
 const Product = require('./model/Product');
 const Order = require('./model/Order');
 
+const {imagesAothun, imagesQuan, imagesSomi, imagesNon, imagesSweater} = require('./imagesURL');
+
 async function initDatabase() {
     try {
         const userCount = await User.count({});
@@ -34,28 +36,29 @@ async function initDatabase() {
                     const quantity = faker.random.number(50);
                     const size = 'L';
                     var price = faker.random.number(200000);
-                    Product.createProduct(productlines[0]._id.toString(), 'AOTHUN ' + index, quantity, price, size);
+                    Product.createProduct(productlines[0]._id.toString(), 'AOTHUN ' + index, quantity, price, size, imagesAothun[index]);
                     price = faker.random.number(500000);
-                    Product.createProduct(productlines[1]._id.toString(), 'SOMI ' + index, quantity, price, size);
+                    Product.createProduct(productlines[1]._id.toString(), 'SOMI ' + index, quantity, price, size, imagesSomi[index]);
                     price = faker.random.number(500000);
-                    Product.createProduct(productlines[2]._id.toString(), 'SWEATER ' + index , quantity, price, size);
+                    Product.createProduct(productlines[2]._id.toString(), 'SWEATER ' + index , quantity, price, size, imagesSweater[index]);
                 }
 
                 for (let index = 0; index < 5; index++) {
                     const price = faker.random.number(800000);
                     const quantity = faker.random.number(30);
                     const size = '32';
-                    Product.createProduct(productlines[3]._id.toString(), 'QUAN ' + index, quantity, price, size);
+                    Product.createProduct(productlines[3]._id.toString(), 'QUAN ' + index, quantity, price, size, imagesQuan[index]);
                 }
 
                 for (let index = 0; index < 3; index++) {
                     const price = faker.random.number(200000);
                     const quantity = faker.random.number(30);
-                    Product.createProduct(productlines[4]._id.toString(), 'NON ' + index, quantity, price);
+                    const size = 'non-size'
+                    Product.createProduct(productlines[4]._id.toString(), 'NON ' + index, quantity, price, size, imagesNon[index]);
                 }
             })
         }
-        return Promise.resolve('success');
+        return Promise.resolve(ProductLines);
     } catch(err) {
         return Promise.reject(err);
     }

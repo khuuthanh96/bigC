@@ -7,15 +7,15 @@ const productSchema = mongoose.Schema({
     quantityInStock: { type: Number, require: true },
     price: { type: Number, require: true },
     description: { type: String },
-    images: [{ type: String , data: Buffer }],
+    images: [{ type: String }],
     size: { type: String, require: true }
 });
 
 const ProductModel = mongoose.model('Product', productSchema);
 
 class Product extends ProductModel {
-    static async createProduct(productLines, name, quantityInStock, price, size) {
-        const product = new Product({productLines, name, quantityInStock, price, size});
+    static async createProduct(productLines, name, quantityInStock, price, size, images) {
+        const product = new Product({productLines, name, quantityInStock, price, size, images});
         await product.save()
         .catch(error => {
             throw new Error('dupplicate key!');

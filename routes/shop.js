@@ -3,10 +3,10 @@ const router = express.Router();
 const Product = require('../model/Product');
 const ProductLines = require('../model/ProductLines');
 
-
+const app = express();
 /* GET shop page. */
 router.get('/', (req, res, next) => {
-    res.redirect('/shop/tshirt/1');
+    res.redirect('/shop/tshirt/1');    
 });
 
 router.get('/product/:id', (req, res, next) => {

@@ -33,7 +33,8 @@ ProductLines.find()
 .then(list => {
     let listName = [];
     app.locals.category = listName.concat(list);
-})
+    console.log(app.locals.category);
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
