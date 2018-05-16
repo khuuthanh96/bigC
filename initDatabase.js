@@ -58,7 +58,7 @@ async function initDatabase() {
                 }
             })
         }
-        return Promise.resolve(ProductLines);
+        return Promise.resolve("success");
     } catch(err) {
         return Promise.reject(err);
     }
