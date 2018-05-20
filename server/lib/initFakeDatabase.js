@@ -1,12 +1,12 @@
 const faker = require('faker');
-const User = require('./model/User');
-const ProductLines = require('./model/ProductLines')
-const Product = require('./model/Product');
-const Order = require('./model/Order');
+const User = require('../model/User');
+const ProductLines = require('../model/ProductLines')
+const Product = require('../model/Product');
+const Order = require('../model/Order');
 
 const {imagesAothun, imagesQuan, imagesSomi, imagesNon, imagesSweater} = require('./imagesURL');
 
-async function initDatabase() {
+async function initFakeDatabase() {
     try {
         const userCount = await User.count({});
         if( userCount < 30) {
@@ -64,4 +64,4 @@ async function initDatabase() {
     }
 }
 
-module.exports = initDatabase;
+module.exports = initFakeDatabase;

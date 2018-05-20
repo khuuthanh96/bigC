@@ -5,22 +5,22 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ProductLines = require('./model/ProductLines');
 
-require('./db');
-const initDatabase = require('./initDatabase');
-initDatabase()
+require('./startDatabase');
+const initFakeDatabase = require('./lib/initFakeDatabase');
+initFakeDatabase()
 .then(msg => {
     console.log(msg);
-    ProductLines.find()
-    .then(list => {
-        let listName = [];
-        app.locals.category = listName.concat(list);
-    });
+    return ProductLines.find()
+})
+.then(list => {
+    let listName = [];
+    app.locals.category = listName.concat(list);
 })
 .catch(err => console.log(err));
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const shopRouter = require('./routes/shop');
+const indexRouter = require('./controllers/index');
+const usersRouter = require('./controllers/users');
+const shopRouter = require('./controllers/shop');
 
 const app = express();
 
@@ -34,13 +34,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/stylesheets',express.static(__dirname + 'public/stylesheets'));
-app.use('/font',express.static(__dirname + 'public/font'));
-app.use('/javascripts',express.static(__dirname + 'public/javascripts'));
-app.use('/images',express.static(__dirname + 'public/images'));
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/shop', shopRouter);
+
+app.get('*', (req ,res) => res.render('page/404'));
 
 module.exports = app;

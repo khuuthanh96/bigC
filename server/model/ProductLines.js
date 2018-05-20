@@ -12,10 +12,17 @@ class ProductLines extends ProductLinesModel {
         const error = productLines.validateSync();
         if(error) throw new Error('Product line info is invalid!');
         await productLines.save()
-        .catch(error => {
-            throw new Error(error);
-        }) 
     }
+
+    static async removeProductLines(idProductLines) {
+        const productLines = await ProductLines.findByIdAndRemove(idProductLines);
+        if(!productLines) throw new Error("Can't find productlines");
+        return productLines;
+    }
+
+    static async updateProductLines(idProductLines, name) {
+        await ProductLines.findByIdAndUpdate(idProductLines, {name});
+    } 
 };
 
 module.exports = ProductLines;

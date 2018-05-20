@@ -3,7 +3,6 @@ const router = express.Router();
 const Product = require('../model/Product');
 const ProductLines = require('../model/ProductLines');
 
-const app = express();
 /* GET shop page. */
 router.get('/', (req, res, next) => {
     res.redirect('/shop/tshirt/1');    
@@ -28,22 +27,23 @@ router.get('/:productline/:page', (req, res, next) => {
 
     ProductLines.find({ name: productline })
     .then(productLine => {
-        Product.find({ productLines: productLine[0]._id })
+        return Product.find({ productLines: productLine[0]._id })
         .limit(perPage)
         .skip((perPage * page) - perPage)
-        .then(products => {
-            Product.count({ productLines: productLine[0]._id })
-            .then(length => {
-                res.render('page/shop', {
-                    products,
-                    current: page,
-                    pages: Math.ceil(length / perPage),
-                    productlines: productLine[0].name
-                })
+    })
+    .then(products => {
+        Product.count({ productLines: products[0].productLines._id })
+        .then(length => {
+            res.render('page/shop', {
+                products,
+                current: page,
+                pages: Math.ceil(length / perPage),
+                productlines: products[0].productLines.name
             })
         })
     })
     .catch(err => {
+        res.render('page/404');
         return next(err);
     });
 });

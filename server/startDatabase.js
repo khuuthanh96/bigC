@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const initDatabase = require('./initDatabase');
-
 mongoose.Promise = global.Promise;
 
-const localUri = 'mongodb://localhost/bigc';
+const localUri = 'mongodb://localhost/eshopper';
 function getDatabaseUri() {
     if(process.env.NODE_ENV === 'production') {
         initDatabase();
