@@ -39,7 +39,7 @@ usersRouter.get('/admin/editproduct/:idProduct', (req, res) => {
   const idProduct = req.params.idProduct;
   Product.findById(idProduct)
   .then(productInfo => {
-    res.render('admin/productDetails', {productInfo});
+    res.render('admin/editproduct', {productInfo});
   })
   .catch(err => console.log(err));
 });
@@ -48,7 +48,7 @@ usersRouter.post('/admin/editproduct/:idProduct', (req, res) => {
   const idProduct = req.params.idProduct;
   const { name, price, description, quantity } = req.body;
   Product.findByIdAndUpdate(idProduct, { name, price, description, quantityInStock: quantity})
-  .then(() => res.redirect('/users/admin'))
+  .then(() => res.redirect('/users/admin/products'))
   .catch(err => console.log(err));
 });
 
@@ -62,8 +62,12 @@ usersRouter.get('/admin/deleteproduct/:idProduct', (req, res) => {
 });
 
 usersRouter.get('/admin/addproduct', (req, res) => {
-  const productInfo = []
-  res.render("admin/productDetails", { productInfo });
+  res.render("admin/addproduct");
+});
+
+usersRouter.post('/admin/addproduct', (req, res) => {
+  // const { name, price, description, quantity } = req.body;
+  // Product.createProduct()
 });
 
 usersRouter.get('/admin/showuser', (req, res) => {
