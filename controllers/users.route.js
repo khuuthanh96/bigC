@@ -28,10 +28,10 @@ usersRouter.post('/login', (req, res, next) => {
   });
 });
 
-usersRouter.get('/admin', (req, res) => {
+usersRouter.get('/admin/products', (req, res) => {
   Product.find()
-  .then(listProduct => {
-    res.render('admin/home', {listProduct});
+  .then(listProducts => {
+    res.render('admin/products', {listProducts});
   })
 });
 
@@ -56,7 +56,20 @@ usersRouter.get('/admin/deleteproduct/:idProduct', (req, res) => {
   const idProduct = req.params.idProduct;
   Product.findByIdAndRemove(idProduct)
   .then(()=> {
-    res.redirect('/users/admin');
+    res.redirect('/users/admin/products');
+  })
+  .catch(err => console.log(err));
+});
+
+usersRouter.get('/admin/addproduct', (req, res) => {
+  const productInfo = []
+  res.render("admin/productDetails", { productInfo });
+});
+
+usersRouter.get('/admin/showuser', (req, res) => {
+  User.find()
+  .then(listUser => {
+    res.render("admin/user", {listUser});
   })
   .catch(err => console.log(err));
 });
