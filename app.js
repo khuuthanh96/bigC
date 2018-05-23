@@ -21,6 +21,7 @@ initDatabase()
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const shopRouter = require('./routes/shop');
+const searchRouter = require('./routes/search')
 
 const app = express();
 
@@ -42,5 +43,6 @@ app.use('/images',express.static(__dirname + 'public/images'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/shop', shopRouter);
+app.use('/search', searchRouter);
 
 module.exports = app;

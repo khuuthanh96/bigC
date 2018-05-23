@@ -21,6 +21,10 @@ class Product extends ProductModel {
             throw new Error('dupplicate key!');
         })
     }
+
+    static findProduct(productLines, keyword) {
+        
+    }
 };
 
 module.exports = Product;
