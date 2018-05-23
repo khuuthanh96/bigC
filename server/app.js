@@ -4,9 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ProductLines = require('./model/ProductLines');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 require('./startDatabase');
 const initFakeDatabase = require('./lib/initFakeDatabase');
+require('./lib/initAdminAccount');
+
 initFakeDatabase()
 .then(msg => {
     console.log(msg);
@@ -18,9 +23,9 @@ initFakeDatabase()
 })
 .catch(err => console.log(err));
 
-const indexRouter = require('./controllers/index');
-const usersRouter = require('./controllers/users');
-const shopRouter = require('./controllers/shop');
+const indexRouter = require('./controllers/index.routes');
+const usersRouter = require('./controllers/users.route');
+const shopRouter = require('./controllers/shop.route');
 
 const app = express();
 
@@ -33,6 +38,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(session({
+    secret: "qweasdzxc",
+    saveUninitialized: true,
+    resave: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -9,18 +9,18 @@ const {imagesAothun, imagesQuan, imagesSomi, imagesNon, imagesSweater} = require
 async function initFakeDatabase() {
     try {
         const userCount = await User.count({});
-        if( userCount < 30) {
+        if( userCount < 1) {
             for (let index = 0; index < 30; index++) {
                 const email = faker.internet.email();
                 const name = faker.name.findName();
                 const address = faker.address.streetAddress();            
 
-                User.signUp(email, '123', name, address);
+                User.signUp(email, '123', name, address)
             }
         }
     
         const productLinesCount = await ProductLines.count({});
-        if(productLinesCount < 4) {
+        if(productLinesCount < 1) {
             await ProductLines.createProductLines('tshirt');
             await ProductLines.createProductLines('shirt');
             await ProductLines.createProductLines('sweater');
@@ -29,7 +29,7 @@ async function initFakeDatabase() {
         }
 
         const productCount = await Product.count({});
-        if(productCount < 5) {
+        if(productCount < 1) {
             ProductLines.find()
             .then(productlines => {
                 for (let index = 0; index < 5; index++) {
