@@ -61,4 +61,12 @@ usersRouter.get('/admin/deleteproduct/:idProduct', (req, res) => {
   .catch(err => console.log(err));
 });
 
+usersRouter.get('/admin/user', (req, res) => {
+  User.find()
+  .then(listUser => {
+    res.render("");
+  })
+  .catch(err => console.log(err))
+})
+
 module.exports = usersRouter;
