@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/admin/head %>
+    
+    <!-- FooTable -->
+    <link href="http://localhost:3000/assets/css/plugins/footable/footable.core.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+    <% include ../partials/admin/navigation %> 
+    <% include ../partials/admin/header %> 
+<!--content-->
+<div id="page-wrapper" class="gray-bg">
+        <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>E-Shopper product list</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="">Home</a>
+                        </li>                        
+                        <li class="active">
+                            <strong>User list</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+            
+                </div>
+            </div>
+<div class="row">
+
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>viewname</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link binded">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="ibox-content">
+          <div class="row">
+            <div class="col-sm-5 m-b-xs">
+            </div>
+            <div class="col-sm-5 m-b-xs">
+            </div>
+            <div class="col-sm-2">
+              <a href="request-broker" class="btn btn-success manage" type="button"><i class="fa fa-user"></i>&nbsp;&nbsp;<span
+                    style="font-size: 13px">NEW</span></a>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">Ảnh đại diện</th>
+                <th class="text-center">Tên đăng nhập</th>
+                <th class="text-center">Tên</th>
+                <th class="text-center">Ngày sinh</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Số điện thoại</th>
+                <th class="text-center">Giới tính</th>
+                <th class="text-center">Địa chỉ</th>
+                <th class="text-center">Hoạt động</th>
+                <th class="text-center">Thao tác</th>
+              </tr>
+              </thead>
+              <tbody>
+              
+                <tr>
+                  <td class="text-center"><img name="image"
+                                               src=""
+                                               width="50"></td>
+                  <td class="text-center">user name</td>
+                  <td class="text-center">name</td>
+                  <td class="text-center">ngày sinh</td>
+                  <td class="text-center">email</td>
+                  <td class="text-center">sđt</td>
+                  <td class="text-center">giới tính</td>
+                  <td class="text-center">địa chỉ</td>
+                  <td class="text-center">
+                    <input type="checkbox" class="user">                    
+                  </td>
+                  <td class="text-center">
+                    <a href='' class='btn btn-warning btn-circle btn-outline manage'><i
+                          class='fa fa-edit'></i>
+                    </a>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            <div id="paging" style="text-align:center;">
+              
+            </div>
+          </div>
+        </div>
+      </div><!--ibox float-e-margins-->
+    </div><!--col-12-->
+</div><!--row-->
+</div><!--page-wrapper-->
+</div><!--wrapper-->
+
+</body>
+</html>
