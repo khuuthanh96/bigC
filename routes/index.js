@@ -9,9 +9,20 @@ router.get('/', function(req, res, next) {
   res.redirect('/shop');
 });
 
-router.get('/test', (req, res) => {
+//test view
+/*
+router.get('/product', (req, res) => {
     res.render("admin/products");
 });
+
+router.get('/user', (req, res) => {
+  res.render("admin/user");
+});
+
+router.get('/editproduct', (req, res) => {
+  res.render("admin/editproduct");
+});*/
+
 
 // router.get('/initfakedb', (req, res, next) => {
 //   initDatabase()
