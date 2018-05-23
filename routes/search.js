@@ -35,31 +35,6 @@ router.get('/:productline/:keyword', async (req, res, next) => {
 			console.log(products[i])
 		}
 	}
-	
-	/*
-	if (productline == 'all') {
-		product_line = ProductLines.find()
-	}
-	else {
-		product_line = ProductLines.find({name : productline})
-	}
-
-	product_line.then(proLines => {
-		for (var line in proLines)	 {
-			console.log(proLines[line]);
-
-			Product.find({ productLines: proLines[line]._id, name : {$regex:keyword}})
-        	.then(products => {
-        		for (var i in products) {
-        			console.log(products[i]);
-        		}
-        	})
-		}
-	})
-	.catch(err => {
-        return next(err);
-    });
-    */
 });
 
 module.exports = router;
