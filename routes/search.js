@@ -6,6 +6,7 @@ const ProductLines = require('../model/ProductLines');
 const app = express();
 
 router.get('/', (req, res, next) => {
+
     res.redirect('/shop');    
 });
 
@@ -14,11 +15,28 @@ router.get('/:keyword', (req, res, next) => {
     res.redirect(`/search/all/${keyword}`);
 });
 
-router.get('/:productline/:keyword', (req, res, next) => {
+router.get('/:productline/:keyword', async (req, res, next) => {
 	const productline = req.params.productline
 	const keyword = req.params.keyword
-	var product_line
+	var product_lines
 
+	if (productline == 'all') {
+		product_lines = await ProductLines.find().exec()
+	}
+	else {
+		product_lines = await ProductLines.find({name : productline}).exec()
+	}
+
+	var products
+	for (var line in product_lines) {
+		products = await Product.find({ productLines : product_lines[line], name : {$regex:keyword}}).exec()
+
+		for (var i in products) {
+			console.log(products[i])
+		}
+	}
+	
+	/*
 	if (productline == 'all') {
 		product_line = ProductLines.find()
 	}
@@ -41,6 +59,7 @@ router.get('/:productline/:keyword', (req, res, next) => {
 	.catch(err => {
         return next(err);
     });
+    */
 });
 
 module.exports = router;

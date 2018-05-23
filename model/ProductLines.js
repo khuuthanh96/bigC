@@ -14,7 +14,7 @@ class ProductLines extends ProductLinesModel {
         await productLines.save()
         .catch(error => {
             throw new Error(error);
-        }) 
+        })
     }
 };
 

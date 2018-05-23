@@ -24,6 +24,16 @@ class User extends UserModel {
         const u = user.toObject();
         return u;
     }
+
+    static removeUser() {
+        
+    }
+
+    static editInfo() {
+
+    }
+
+
 }
 
 module.exports = User;
