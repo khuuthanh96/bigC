@@ -9,6 +9,10 @@ router.get('/', function(req, res, next) {
   res.redirect('/shop');
 });
 
+router.get('/test', (req, res) => {
+    res.render("admin/products");
+});
+
 // router.get('/initfakedb', (req, res, next) => {
 //   initDatabase()
 //   .then(msg => {
