@@ -1,7 +1,13 @@
 /*!
+<<<<<<< HEAD
  * <%= meta.title %> v<%= meta.version %> Print Stylesheet
  * Docs & License: <%= meta.homepage %>
  * (c) <%= meta.copyright %>
+=======
+ * FullCalendar v2.2.0 Print Stylesheet
+ * Docs & License: http://arshaw.com/fullcalendar/
+ * (c) 2013 Adam Shaw
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
  */
 
 /*
@@ -42,6 +48,7 @@ tbody,
 	background: #fff !important;
 }
 
+<<<<<<< HEAD
 /* kill the overlaid, absolutely-positioned components */
 /* common... */
 .fc-bg,
@@ -53,6 +60,13 @@ tbody,
 .fc-business-container,
 .fc-highlight-container,
 .fc-helper-container {
+=======
+/* kill the overlaid, absolutely-positioned common components */
+.fc-bg,
+.fc-bgevent-skeleton,
+.fc-highlight-skeleton,
+.fc-helper-skeleton {
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
 	display: none;
 }
 
