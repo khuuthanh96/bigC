@@ -26,6 +26,7 @@ initFakeDatabase()
 const indexRouter = require('./controllers/index.routes');
 const usersRouter = require('./controllers/users.route');
 const shopRouter = require('./controllers/shop.route');
+const searchRouter = require('./controllers/search.route');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/shop', shopRouter);
+app.use('/search', searchRouter);
 
 app.get('*', (req ,res) => res.render('page/404'));
 
