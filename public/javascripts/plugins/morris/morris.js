@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+/* @license
+morris.js v0.5.0
+Copyright 2014 Olly Smith All rights reserved.
+Licensed under the BSD-2-Clause License.
+*/
+
+
+=======
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
 (function() {
   var $, Morris, minutesSpecHelper, secondsSpecHelper,
     __slice = [].slice,
@@ -120,8 +130,12 @@
         var offset, touch;
         touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
         offset = _this.el.offset();
+<<<<<<< HEAD
+        return _this.fire('hovermove', touch.pageX - offset.left, touch.pageY - offset.top);
+=======
         _this.fire('hover', touch.pageX - offset.left, touch.pageY - offset.top);
         return touch;
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
       });
       this.el.bind('click', function(evt) {
         var offset;
@@ -153,6 +167,10 @@
           return _this.timeoutId = window.setTimeout(_this.resizeHandler, 100);
         });
       }
+<<<<<<< HEAD
+      this.el.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
+=======
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
       if (this.postInit) {
         this.postInit();
       }
@@ -656,9 +674,19 @@
     }
 
     Hover.prototype.update = function(html, x, y) {
+<<<<<<< HEAD
+      if (!html) {
+        return this.hide();
+      } else {
+        this.html(html);
+        this.show();
+        return this.moveTo(x, y);
+      }
+=======
       this.html;
       this.show();
       return this.moveTo(x, y);
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
     };
 
     Hover.prototype.html = function(content) {
@@ -737,7 +765,10 @@
       xLabels: 'auto',
       xLabelFormat: null,
       xLabelMargin: 24,
+<<<<<<< HEAD
+=======
       continuousLine: true,
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
       hideHover: false
     };
 
@@ -843,7 +874,11 @@
     };
 
     Line.prototype.generatePaths = function() {
+<<<<<<< HEAD
+      var coords, i, r, smooth;
+=======
       var c, coords, i, r, smooth;
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
       return this.paths = (function() {
         var _i, _ref, _ref1, _results;
         _results = [];
@@ -864,6 +899,8 @@
             }
             return _results1;
           }).call(this);
+<<<<<<< HEAD
+=======
           if (this.options.continuousLine) {
             coords = (function() {
               var _j, _len, _results1;
@@ -877,6 +914,7 @@
               return _results1;
             })();
           }
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
           if (coords.length > 1) {
             _results.push(Morris.Line.createPath(coords, smooth, this.bottom));
           } else {
@@ -1487,11 +1525,23 @@
     };
 
     Bar.prototype.drawSeries = function() {
+<<<<<<< HEAD
+      var barWidth, bottom, groupWidth, idx, lastTop, left, leftPadding, numBars, row, sidx, size, spaceLeft, top, ypos, zeroPos;
+      groupWidth = this.width / this.options.data.length;
+      numBars = this.options.stacked ? 1 : this.options.ykeys.length;
+      barWidth = (groupWidth * this.options.barSizeRatio - this.options.barGap * (numBars - 1)) / numBars;
+      if (this.options.barSize) {
+        barWidth = Math.min(barWidth, this.options.barSize);
+      }
+      spaceLeft = groupWidth - barWidth * numBars - this.options.barGap * (numBars - 1);
+      leftPadding = spaceLeft / 2;
+=======
       var barWidth, bottom, groupWidth, idx, lastTop, left, leftPadding, numBars, row, sidx, size, top, ypos, zeroPos;
       groupWidth = this.width / this.options.data.length;
       numBars = this.options.stacked != null ? 1 : this.options.ykeys.length;
       barWidth = (groupWidth * this.options.barSizeRatio - this.options.barGap * (numBars - 1)) / numBars;
       leftPadding = groupWidth * (1 - this.options.barSizeRatio) / 2;
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
       zeroPos = this.ymin <= 0 && this.ymax >= 0 ? this.transY(0) : null;
       return this.bars = (function() {
         var _i, _len, _ref, _results;
@@ -1519,6 +1569,12 @@
                   left += sidx * (barWidth + this.options.barGap);
                 }
                 size = bottom - top;
+<<<<<<< HEAD
+                if (this.options.verticalGridCondition && this.options.verticalGridCondition(row.x)) {
+                  this.drawBar(this.left + idx * groupWidth, this.top, groupWidth, Math.abs(this.top - this.bottom), this.options.verticalGridColor, this.options.verticalGridOpacity, this.options.barRadius);
+                }
+=======
+>>>>>>> cec16021b2e7c761015eb4075ce8b97a4aa57c6c
                 if (this.options.stacked) {
                   top -= lastTop;
                 }

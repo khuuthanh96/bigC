@@ -4,23 +4,28 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ProductLines = require('./model/ProductLines');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
 
-require('./db');
-const initDatabase = require('./initDatabase');
-initDatabase()
+require('./startDatabase');
+const initFakeDatabase = require('./lib/initFakeDatabase');
+require('./lib/initAdminAccount');
+
+initFakeDatabase()
 .then(msg => {
     console.log(msg);
-    ProductLines.find()
-    .then(list => {
-        let listName = [];
-        app.locals.category = listName.concat(list);
-    });
+    return ProductLines.find()
+})
+.then(list => {
+    let listName = [];
+    app.locals.category = listName.concat(list);
 })
 .catch(err => console.log(err));
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const shopRouter = require('./routes/shop');
+const indexRouter = require('./controllers/index.routes');
+const usersRouter = require('./controllers/users.route');
+const shopRouter = require('./controllers/shop.route');
 
 const app = express();
 
@@ -33,14 +38,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/stylesheets',express.static(__dirname + 'public/stylesheets'));
-app.use('/font',express.static(__dirname + 'public/font'));
-app.use('/javascripts',express.static(__dirname + 'public/javascripts'));
-app.use('/images',express.static(__dirname + 'public/images'));
+app.use(session({
+    secret: "qweasdzxc",
+    saveUninitialized: true,
+    resave: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/shop', shopRouter);
+
+app.get('*', (req ,res) => res.render('page/404'));
 
 module.exports = app;

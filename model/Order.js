@@ -9,6 +9,8 @@ const orderSchema = mongoose.Schema({
     requiredDate: { type: Date, default: Date.now },
     shippedDate: { type: Date },
     customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+}, {
+    timestamps: true 
 });
 
 const OrderModel = mongoose.model('Order', orderSchema);
