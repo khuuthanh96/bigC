@@ -24,7 +24,7 @@ initFakeDatabase()
 .catch(err => console.log(err));
 
 const indexRouter = require('./controllers/index.routes');
-const usersRouter = require('./controllers/users.route');
+const adminRouter = require('./controllers/admin.route');
 const shopRouter = require('./controllers/shop.route');
 
 const app = express();
@@ -33,6 +33,16 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(session({
+    secret: "sdadknxzvcnlker",
+    cookie:{
+        expires: 1000*60*60*24*2
+    },
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -41,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/admin', adminRouter);
 app.use('/shop', shopRouter);
 
 app.get('*', (req ,res) => res.render('page/404'));
