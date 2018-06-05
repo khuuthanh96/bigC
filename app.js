@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 
-require('./startDatabase');
-const initFakeDatabase = require('./lib/initFakeDatabase');
-require('./lib/initAdminAccount');
+require('./startDatabase'); //connect to database
+const initFakeDatabase = require('./lib/initFakeDatabase'); // create fake database for testing
+require('./lib/initAdminAccount'); // create admin account for managed
 
 initFakeDatabase()
 .then(msg => {
@@ -24,7 +24,7 @@ initFakeDatabase()
 .catch(err => console.log(err));
 
 const indexRouter = require('./controllers/index.routes');
-const usersRouter = require('./controllers/users.route');
+const adminRouter = require('./controllers/admin.route');
 const shopRouter = require('./controllers/shop.route');
 
 const app = express();
@@ -33,6 +33,16 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(session({
+    secret: "sdadknxzvcnlker",
+    cookie:{
+        expires: 1000*60*60*24*2
+    },
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,16 +50,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(session({
-    secret: "qweasdzxc",
-    saveUninitialized: true,
-    resave: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/admin', adminRouter);
 app.use('/shop', shopRouter);
 
 app.get('*', (req ,res) => res.render('page/404'));

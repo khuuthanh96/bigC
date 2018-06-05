@@ -63,8 +63,18 @@ class User extends UserModel {
         return u;
     }
 
-    static async comparePassword(password, cb) {
-        compare(password, this.password, )
+    static async comparePassword(idUser, password, cb) {
+        User.findById(idUser)
+        .then(user => {
+            compare(password, user.password, (err, same)=> {
+                if(err) return cb(err);
+                return cb(null, same);
+            });
+        })
+        .catch(err => {
+            cb(err, false);
+        });
+
     }
 }
 
