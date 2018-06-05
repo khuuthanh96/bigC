@@ -2,9 +2,13 @@ const express = require('express');
 const usersRouter = express.Router();
 const {mustBeUser, roleAuthorization} = require('./mustBeUser.middleware');
 const User = require('../model/User');
-const passport = require('passport');
-const requireAuth = passport.authenticate('jwt', {session: false});
 const Product = require('../model/Product');
+const passportService = require('../lib/passport');
+const passport = require('passport');
+
+const requireAuth = passport.authenticate('jwt', {session: false});
+const requireLogin = passport.authenticate('local', {session: false});
+
 /* GET users listing. */
 usersRouter.get('/', function(req, res, next) {
   res.redirect('/users/login');
@@ -14,21 +18,14 @@ usersRouter.get('/login', (req, res, next) => {
   res.render('admin/login');
 });
 
-usersRouter.post('/login', (req, res, next) => {
-  const { email, password } = req.body;
-  User.logIn(email, password)
-  .then(user => {
-    req.headers.token = user.token;
-    console.log(req.headers.token);
-    res.redirect('/users/admin')
-  })
-  .catch(err =>{
-    console.log(err);
-    res.redirect('/users/login');
-  });
+usersRouter.post('/login',requireLogin, (req, res, next) => {
+  const { email, roles } = req.body;
+  req.setRequestHeader('Authorization', 'jwt ' + req.body.user);
+  res.redirect('users/admin/products');
+  // res.cookie("Authorization", req.user.token, {maxAge: 2 * 24 * 60 * 60 * 1000, httpOnly: true});
 });
 
-usersRouter.get('/admin/products', (req, res) => {
+usersRouter.get('/admin/products',requireAuth ,(req, res) => {
   Product.find()
   .then(listProducts => {
     res.render('admin/products', {listProducts});

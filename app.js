@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 
-require('./startDatabase');
-const initFakeDatabase = require('./lib/initFakeDatabase');
-require('./lib/initAdminAccount');
+require('./startDatabase'); //connect to database
+const initFakeDatabase = require('./lib/initFakeDatabase'); // create fake database for testing
+require('./lib/initAdminAccount'); // create admin account for managed
 
 initFakeDatabase()
 .then(msg => {
@@ -39,14 +39,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
-
-app.use(session({
-    secret: "qweasdzxc",
-    saveUninitialized: true,
-    resave: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
