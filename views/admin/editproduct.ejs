@@ -31,7 +31,7 @@
         </div>
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
 
-        <form method="POST" action="/admin/editproduct/<%= productInfo._id %>">            
+        <form method="POST" action="/admin/editproduct/<%= productInfo._id %>" enctype="multipart/form-data">            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tabs-container">
@@ -54,9 +54,21 @@
                                                 <div class="col-sm-10">
                                                     <div class="summernote">
                                                         <input type="text" name="description" class="form-control" value="<%= productInfo.description %>">
-                                                        <br/>
 
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"><label class="col-sm-2 control-label">Product Lines:</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="productLines">
+                                                        <% for (let i = 0; i < category.length; i++) { %>
+                                                            <% if(prodLName === category[i].name) { %>
+                                                                <option selected><%= category[i].name %></option>
+                                                            <% }else{ %>
+                                                                <option><%= category[i].name %></option>
+                                                            <% } %>    
+                                                        <% }; %>                                                
+                                                    </select>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -78,9 +90,14 @@
                                 
                                             <div class="form-group"><label class="col-sm-2 control-label">Status:</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" >
-                                                        <option>Enable</option>
+                                                    <select class="form-control" name="status" >
+                                                        <% if(productInfo.status === "Enable"){ %>
+                                                        <option selected>Enable</option>
                                                         <option>Disable</option>
+                                                        <% }else{ %>
+                                                        <option selected>Disable</option>
+                                                        <option>Enable</option>
+                                                        <% } %>
                                                     </select>
                                                 </div>
                                             </div>
@@ -93,7 +110,11 @@
                                 <div id="tab-3" class="tab-pane">
                                     <div class="panel-body">
                                         <div class="clearfix" style="margin-bottom: 15px">
-                                        <button class="btn btn-success pull-right" type="button"><i class="fa fa-upload"></i>&nbsp;&nbsp;<span class="bold">Upload</span></button>
+                                                <label for="upload-image" class="btn btn-danger pull-right">
+
+                                                        <input type="file" accept="image/png" id="upload-image" name="image" onchange="loadFile(event)">
+                                                       
+                                                    </label>
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-stripped">
@@ -103,31 +124,35 @@
                                                         Image preview
                                                     </th>
                                                     <th>
-                                                        Image url
-                                                    </th>
-                                                    <th>
-                                                        Sort order
-                                                    </th>
-                                                    <th>
                                                         Actions
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/2s.jpg">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" disabled value="http://mydomain.com/images/image1.png">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" value="1">
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                                <td>
+                                                                        <img class="centered" id="output" style="
+                                                                        height: auto; 
+                                                                        width: auto; 
+                                                                        max-width: 300px; 
+                                                                        max-height: 300px;"/>
+                                                                </td>
+                                                            
+                                                                <td>
+                                                                    <button id="rmv1" type="button" class="btn btn-white"><i class="fa fa-trash"></i> </button>
+                                                                </td>
+                                                            </tr>
+                                                <% for (let i = 0; i < productInfo.images.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="/images/shop/<%= productInfo.images[i] %>">
+                                                        </td>
+                                                        <td>
+                                                            <i class="btn btn-white"><i class="fa fa-trash"></i>
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
+                                        
                                              
                                                 </tbody>
                                             </table>
@@ -151,3 +176,18 @@
 <% include ../partials/admin/script %>
 </body>
 </html>
+<script>
+        document.getElementById('rmv1').onclick = function() { 
+        var file = document.getElementById("upload-image");
+        file.value = file.defaultValue;
+    
+        var image = document.getElementById("output");
+        image.src = "";
+        }
+    
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        };
+    
+</script>

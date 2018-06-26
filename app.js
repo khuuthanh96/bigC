@@ -7,7 +7,7 @@ const ProductLines = require('./model/ProductLines');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-
+const passportService = require('./lib/passport');
 require('./startDatabase'); //connect to database
 const initFakeDatabase = require('./lib/initFakeDatabase'); // create fake database for testing
 require('./lib/initAdminAccount'); // create admin account for managed
@@ -26,6 +26,7 @@ initFakeDatabase()
 const indexRouter = require('./controllers/index.routes');
 const adminRouter = require('./controllers/admin.route');
 const shopRouter = require('./controllers/shop.route');
+const userRouter = require('./controllers/user.route');
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/shop', shopRouter);
+app.use('/user', userRouter);
 
 app.get('*', (req ,res) => res.render('page/404'));
 

@@ -7,8 +7,9 @@ const productSchema = mongoose.Schema({
     quantityInStock: { type: Number, require: true },
     price: { type: Number, require: true },
     description: { type: String },
-    images: [{ type: String }],
-    size: { type: String, require: true }
+    images: [{ type: String, trim: true }],
+    size: { type: String, require: true },
+    status: { type: String }
 });
 
 const ProductModel = mongoose.model('Product', productSchema);
@@ -16,7 +17,8 @@ const ProductModel = mongoose.model('Product', productSchema);
 class Product extends ProductModel {
     static async createProduct(productLines, name, quantityInStock, price, size, images, description) {
         const product = new Product({productLines, name, quantityInStock, price, size, images, description});
-        await product.save()
+        const p = await product.save();
+        return p;
     }
 
     static async removeProduct(idProduct) {

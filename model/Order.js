@@ -8,7 +8,8 @@ const orderSchema = mongoose.Schema({
     totalPrice: { type: Number },
     requiredDate: { type: Date, default: Date.now },
     shippedDate: { type: Date },
-    customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    status: { type: String }
 }, {
     timestamps: true 
 });
