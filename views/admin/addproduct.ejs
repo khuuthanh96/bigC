@@ -31,108 +31,113 @@
         </div>
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
 
-        <form method="POST" action="/users/admin/editproduct/<%= productInfo._id %>">            
+        <form method="POST" action="/admin/addproduct" enctype="multipart/form-data" class="md-form">            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tabs-container">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1"> Product info</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2"> Data</a></li>                                
-                                <li class=""><a data-toggle="tab" href="#tab-3"> Images</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2"> Images</a></li>                                
                             </ul>
                             <div class="tab-content">
-                                <div id="tab-1" class="tab-pane active">
+                                <div name="tab-1" id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
                                         <fieldset class="form-horizontal">
+                                            <div class="form-group"><label class="col-sm-2 control-label">ID:</label>
+                                                <div class="col-sm-10"><input type="text" disabled class="form-control"></div>
+                                            </div>
                                             <div class="form-group"><label class="col-sm-2 control-label">Name:</label>
                                                 <div class="col-sm-10"><input type="text" name="name" class="form-control" placeholder="name"></div>
                                             </div>
                                             <div class="form-group"><label class="col-sm-2 control-label">Price:</label>
                                                 <div class="col-sm-10"><input type="text" name="price" class="form-control" placeholder="price"></div>
                                             </div>
-                                            <div class="form-group"><label class="col-sm-2 control-label">Description:</label>
+                                            <div class="form-group"><label class="col-sm-2 control-label">Size:</label>
                                                 <div class="col-sm-10">
-                                                    <div class="summernote">
-                                                        <input type="text" name="description" class="form-control" placeholder="description">
-                                                        <br/>
-
-                                                    </div>
+                                                    <select class="form-control" name="size">
+                                                        <option>XS</option>
+                                                        <option>S</option>
+                                                        <option>M</option>
+                                                        <option>L</option>
+                                                        <option>XL</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </fieldset>
-
-                                    </div>
-                                </div>
-                                <div id="tab-2" class="tab-pane">
-                                    <div class="panel-body">
-
-                                        <fieldset class="form-horizontal">
-                                            <div class="form-group"><label class="col-sm-2 control-label">ID:</label>
-                                                <div class="col-sm-10"><input type="text" disabled class="form-control"></div>
+                                           
+                                            <div class="form-group"><label class="col-sm-2 control-label">Product Lines:</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="productLines">
+                                                        <% for (let i = 0; i < category.length; i++) { %>
+                                                            <option><%= category[i].name %></option>
+                                                        <% }; %>                                                
+                                                    </select>
+                                                </div>
                                             </div>
-                                     
-
                                             <div class="form-group"><label class="col-sm-2 control-label">Quantity:</label>
-                                                <div class="col-sm-10"><input type="text" name="quantity" class="form-control" placeholder="0"></div>
+                                                <div class="col-sm-10"><input type="number" name="quantity" class="form-control" placeholder="0"></div>
                                             </div>
-                                
                                             <div class="form-group"><label class="col-sm-2 control-label">Status:</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" >
+                                                    <select class="form-control" name="status">
                                                         <option>Enable</option>
                                                         <option>Disable</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                        </fieldset>
 
+                                            <div class="form-group"><label class="col-sm-2 control-label">Description:</label>
+                                                <div class="col-sm-10">
+                                                    <div class="summernote">
+                                                        <input type="text" name="description" class="form-control" placeholder="description">
+                                                    </div>
+                                                </div>
+                                            </br>
+                                            </div>
+                                        </fieldset>
 
                                     </div>
                                 </div>
-                                
-                                <div id="tab-3" class="tab-pane">
+
+                                <div name="tab-2" id="tab-2" class="tab-pane">
                                     <div class="panel-body">
                                         <div class="clearfix" style="margin-bottom: 15px">
-                                        <button class="btn btn-success pull-right" type="button"><i class="fa fa-upload"></i>&nbsp;&nbsp;<span class="bold">Upload</span></button>
-                                        </div>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-stripped">
-                                                <thead>
-                                                <tr>
-                                                    <th>
-                                                        Image preview
-                                                    </th>
-                                                    <th>
-                                                        Image url
-                                                    </th>
-                                                    <th>
-                                                        Sort order
-                                                    </th>
-                                                    <th>
-                                                        Actions
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/2s.jpg">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" disabled value="http://mydomain.com/images/image1.png">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" value="1">
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-                                             
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <label for="upload-image" class="btn btn-danger pull-right">
 
+                                            <input type="file" accept="image/png" id="upload-image" name="image" onchange="loadFile(event)">
+                                           
+                                        </label>
+                                        </div>
+                                     
+                                         <div class="table-responsive">
+                                                <table class="table table-bordered table-stripped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Image preview
+                                                        </th>
+                                                        <th>
+                                                            Actions
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                                <img class="centered" id="output" style="
+                                                                height: auto; 
+                                                                width: auto; 
+                                                                max-width: 300px; 
+                                                                max-height: 300px;"/>
+                                                        </td>
+                                                    
+                                                        <td>
+                                                            <button id="rmv1" type="button" class="btn btn-white"><i class="fa fa-trash"></i> </button>
+                                                        </td>
+                                                    </tr>
+                                                 
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +146,7 @@
             </div>
 			<div>
 				<button type="submit" class="btn btn-w-m btn-primary">SAVE</button>
-				<a type="button" class="btn btn-w-m btn-primary" href="/users/admin/products">Cancel</a>
+				<a type="button" class="btn btn-w-m btn-primary" href="/admin/products">Cancel</a>
             </div>
         </form>    
         </div>
@@ -151,3 +156,18 @@
 <% include ../partials/admin/script %>
 </body>
 </html>
+<script>
+    document.getElementById('rmv1').onclick = function() { 
+    var file = document.getElementById("upload-image");
+    file.value = file.defaultValue;
+
+    var image = document.getElementById("output");
+    image.src = "";
+    }
+
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+</script>
