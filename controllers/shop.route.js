@@ -3,6 +3,7 @@ const shopRouter = express.Router();
 const Product = require('../model/Product');
 const ProductLines = require('../model/ProductLines');
 const {rolesAuthorized, isLoggedIn} = require('../lib/auth.middleware');
+
 /* GET shop page. */
 shopRouter.get('/', (req, res, next) => {
     console.log(req.isAuthenticated());

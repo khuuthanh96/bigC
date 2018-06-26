@@ -15,16 +15,17 @@ const userSchema = mongoose.Schema({
         enum: ['user', 'staff', 'admin'],
         default: 'user'
     },
-    order: [{ type: mongoose.Schema.Types.ObjectId, href: 'Order'}]
+    order: [{ type: mongoose.Schema.Types.ObjectId, href: 'Order'}],
+    active: { type: Boolean, default: false },
+    activeCode: { type: String }
 });
 
 const UserModel = mongoose.model('User', userSchema);
 
 class User extends UserModel {
-    static async signUp(email, password, name, address, phone, sex, dayOfBirth) {
-        console.log(email, password, name, address, phone, sex, dayOfBirth)
+    static async signUp(email, password, name, address, phone, sex, dayOfBirth, activeCode) {
         const encrypted = await hash(password, 8);
-        const user = new User({ email, password: encrypted, name, address, phone, sex, dayOfBirth });
+        const user = new User({ email, password: encrypted, name, address, phone, sex, dayOfBirth, activeCode });
         const error = user.validateSync();
         if (error) throw new Error(error);
 
@@ -37,23 +38,17 @@ class User extends UserModel {
         return u;
     }
 
-    static async logIn(email, password) {
-        const user = await User.findOne({ email });
+    static async setRoles(idUser, role){
+        const user = await User.findByIdAndUpdate(idUser, { roles: role })
         if(!user) throw new Error("Email not found");
-
-        const passwordCorrect = await compare(password, user.password);
-        if(!passwordCorrect) throw new Error("Password is invalid");
 
         const u = user.toObject();
         delete u.password;
-
-        const token = await sign({ _id: u._id});
-        u.token = token;
         return u;
     }
 
-    static async setRoles(idUser, role){
-        const user = await User.findByIdAndUpdate(idUser, { roles: role })
+    static async setActive(idUser) {
+        const user = await User.findByIdAndUpdate(idUser, { active: true })
         if(!user) throw new Error("Email not found");
 
         const u = user.toObject();
