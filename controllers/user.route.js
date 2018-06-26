@@ -23,12 +23,13 @@ userRouter.get('/', (req, res) => {
 })
 
 userRouter.get('/login', (req, res) => {
-    res.render('page/login-register', {isLogin: false});
+    res.render('page/login-register', {isLogin: false, error: req.flash('error')});
 })
 
 userRouter.post('/login', passport.authenticate('local', {
     failureRedirect: '/user/login',
-    successRedirect: '/shop'
+    successRedirect: '/shop',
+    failureFlash: 'Invalid username or password.'
 }));
 
 userRouter.get('/logout',
@@ -51,13 +52,16 @@ userRouter.post('/signup', (req, res) => {
     const {email, name, phone, sex, birthday, password, address} = req.body;
     User.findOne({email})
     .then(userExisting => {
-        if(userExisting) return res.send('Email in used');
+        if(userExisting) {
+            req.flash('error', 'Email in use!!!');
+            res.redirect('/user/login');
+        };
         
         return User.signUp(email, password,name,address,phone,sex,birthday,randomstring.generate(30));
     })
     .then(user => {
+        if(!user) return console.log('Email in use');
         const link = `http://${req.get('host')}/user/verify/${user.activeCode}`;
-        console.log(link)
         const mailOptions = {
             from: 'Eshopper Verify Email <tempthanh321@gmail.com>', // sender address
             to: email, // list of receivers
@@ -89,4 +93,40 @@ userRouter.get('/verify/:activeCode', (req, res) => {
     .then( _ => res.redirect('/'))
 })
 
+userRouter.get('/password', 
+    isUserLoggedIn,
+    (req, res) => {
+        res.render('page/user-change-pass', {
+            isLogin: req.isAuthenticated(), 
+            error: req.flash('error'), 
+            msg: req.flash('msg')
+        })
+    }
+)
+
+userRouter.post('/password', 
+    isUserLoggedIn,
+    (req, res) => {
+        const {oldPass, newPass} = req.body;
+        User.comparePassword(req.user._id, oldPass, (err,same) => {
+            if(err) {
+                req.flash('error', "Password is incorrect");
+                return res.redirect('/user/password');
+            }
+
+            if(!same) {
+                req.flash('error', "Password is incorrect");
+                return res.redirect('/user/password');
+            }
+
+            User.changePassword(req.user._id, newPass)
+            .then(user => { 
+                console.log(user);
+                req.flash('msg', 'Successfully!');
+                console.log('hello kiki');
+                return res.redirect('/user/password')
+            })
+        })
+    }
+)
 module.exports = userRouter

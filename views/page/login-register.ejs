@@ -35,6 +35,9 @@
 				<div class="col-sm-4">
 					<div class="signup-form">
 						<!--sign up form-->
+						<% if(error){ %>
+							<span class="text-danger" style="font-size: 30px"><%= error %></span>
+						<% } %>
 						<h2>New User Signup!</h2>
 						<form action="/user/signup" method="POST">
 							<label for="">Name</label>
@@ -46,11 +49,11 @@
 							<label for="">Re-password</label>
 							<input type="password" placeholder="Password" name="rePassword"/>
 							<label for="">Birthday</label>
-							<input type="date" placeholder="Name"  name="birthday"/>
+							<input type="date"  name="birthday"/>
 							<label for="">Address</label>
-							<input type="text" placeholder="Name" name="address"/>
+							<input type="text" placeholder="Address" name="address"/>
 							<label for="">Phone</label>
-							<input type="text" placeholder="Name" name = "phone"/>
+							<input type="number" placeholder="Phone Number" name = "phone"/>
 		
 							<div class="radio">
 								<label>

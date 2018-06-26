@@ -69,6 +69,16 @@ class User extends UserModel {
         });
 
     }
+
+    static async changePassword(idUser, password) {
+        const encrypted = await hash(password, 8);
+        const user = await User.findByIdAndUpdate(idUser, {password: encrypted})
+        if(!user) throw new Error("User not found");
+
+        const u = user.toObject();
+        delete u.password;
+        return u;
+    }
 }
 
 module.exports = User;

@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const passportService = require('./lib/passport');
+const flash = require('connect-flash')
 require('./startDatabase'); //connect to database
 const initFakeDatabase = require('./lib/initFakeDatabase'); // create fake database for testing
 require('./lib/initAdminAccount'); // create admin account for managed
@@ -50,6 +51,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
