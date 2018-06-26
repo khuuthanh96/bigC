@@ -25,22 +25,20 @@
 						<!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="<%= product.images[0] %>" alt="" />
+								<img src="/images/shop/<%=product.images[0] %>" alt="" />
 							</div>
 						</div>
 
-
+					<form method="POST" action="#">
 						<div class="col-sm-6">
 							<div class="product-information">
 								<!--/product-information-->
-								<h2>
-									<%= product.name %>
-								</h2>
+								<h2><%= product.name %></h2>
 								<img src="/images/product-details/rating.png" alt="" />
 								<span>
 									<span><%= product.price %> ₫</span>
 									<label>Quantity:</label>
-									<input type="text" value="1" />
+									<input type="number" value="1" name="quantity"/>
 								</span>
 								<p>
 									<b>Availability:</b>
@@ -55,11 +53,11 @@
 										Add to cart
 									</button>
 								</p>
-								<a href="">
+								<a href="#">
 									<img src="/images/product-details/share.png" class="share img-responsive" alt="" />
 								</a>
 							</div>
-							
+					</form>	
 						<!--/product-information-->
 					</div>
 				</div>
@@ -80,6 +78,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active in fade" id="details">
 							<div class="col-sm-3">
+
 							</div>
 						</div>
 
@@ -87,15 +86,15 @@
 							<div class="col-sm-12">
 								<ul>
 									<li>
-										<a href="">
+										<a href="#">
 											<i class="fa fa-user"></i>EUGEN</a>
 									</li>
 									<li>
-										<a href="">
+										<a href="#">
 											<i class="fa fa-clock-o"></i>12:41 PM</a>
 									</li>
 									<li>
-										<a href="">
+										<a href="#">
 											<i class="fa fa-calendar-o"></i>31 DEC 2014</a>
 									</li>
 								</ul>

@@ -1,9 +1,12 @@
 const express = require('express');
+const fs = require('fs')
 const adminRouter = express.Router();
-const {rolesAuthorized, isLoggedIn} = require('./auth.middleware');
+const {rolesAuthorized, isLoggedIn} = require('../lib/auth.middleware');
+
 const User = require('../model/User');
 const Product = require('../model/Product');
 const ProductLines = require('../model/ProductLines');
+const Order = require('../model/Order');
 
 const passport = require('passport');
 const uploadConfig = require('../lib/uploadImageConfig');
@@ -12,7 +15,7 @@ const uploadImage = uploadConfig.single('image')
 
 /* GET users listing. */
 adminRouter.get('/', function(req, res, next) {
-  res.redirect('/users/login');
+  res.redirect('/admin/login');
 });
 
 adminRouter.get('/login', (req, res, next) => {
@@ -21,7 +24,8 @@ adminRouter.get('/login', (req, res, next) => {
 
 adminRouter.post('/login',passport.authenticate('local', {
   failureRedirect: '/admin/login',
-  successRedirect: '/admin/products'
+  successRedirect: '/admin/products',
+  failureFlash: 'Invalid username or password.'
 }));
 
 adminRouter.get('/logout',
@@ -49,8 +53,10 @@ adminRouter.get('/editproduct/:idProduct',
   (req, res) => {
     const idProduct = req.params.idProduct;
     Product.findById(idProduct)
-    .then(productInfo => {
-      res.render('admin/editproduct', {productInfo});
+    .then(async (productInfo) => {
+      const prodL = await ProductLines.findById(productInfo.productLines);
+      console.log(prodL);
+      res.render('admin/editproduct', {productInfo, prodLName: prodL.name});
     })
     .catch(err => console.log(err));
 });
@@ -59,11 +65,32 @@ adminRouter.post('/editproduct/:idProduct',
   isLoggedIn, 
   rolesAuthorized(['admin', 'staff']), 
   (req, res) => {
-    const idProduct = req.params.idProduct;
-    const { name, price, description, quantity } = req.body;
-    Product.findByIdAndUpdate(idProduct, { name, price, description, quantityInStock: quantity})
-    .then(() => res.redirect('/admin/products'))
-    .catch(err => console.log(err));
+    uploadImage(req, res, async (err) => {
+      if(err) return res.send(err);
+      const idProduct = req.params.idProduct;
+      const info = req.body;
+      const prodL = await ProductLines.findOne({name: info.productLines});
+      console.log(info)
+
+      Product.findByIdAndUpdate(idProduct, { 
+        name: info.name, 
+        price: info.price,
+        productLines: prodL._id,
+        quantityInStock: info.quantity,
+        size: info.size,
+        status: info.status,
+        description: info.description
+      })
+      .then(() => {
+        if(req.file) {
+          Product.findByIdAndUpdate(idProduct, {$push: { images: req.file.filename }})
+          .then(() => res.redirect('/admin/products'))
+          
+        }
+        res.redirect('/admin/products')
+      })
+      .catch(err => console.log(err));
+    })
 });
 
 adminRouter.get('/deleteproduct/:idProduct',
@@ -72,7 +99,10 @@ adminRouter.get('/deleteproduct/:idProduct',
   (req, res) => {
     const idProduct = req.params.idProduct;
     Product.findByIdAndRemove(idProduct)
-    .then(()=> {
+    .then(p => {
+      p.images.forEach(img => {
+        fs.unlinkSync(`./public/images/shop/${img}`)
+      })
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err));
@@ -104,12 +134,15 @@ adminRouter.post('/addproduct',
         status: info.status,
         description: info.description
       });
-      console.log(info);
       const p = await product.save();
 
-      Product.findByIdAndUpdate(p._id, {$addToSet: { images: req.file.filename }})
-      .then(() => res.redirect('/admin/products'))
-      .catch(err => console.log(err));
+      if(req.file) {
+        Product.findByIdAndUpdate(p._id, {$push: { images: req.file.filename }})
+        .then(() => res.redirect('/admin/products'))
+        .catch(err => console.log(err));
+      }
+      res.redirect('/admin/products')
+ 
     })
 });
 
@@ -123,5 +156,13 @@ adminRouter.get('/showuser',
     })
     .catch(err => console.log(err));
 });
+
+adminRouter.get('/showorder',
+  isLoggedIn,
+  rolesAuthorized(['admin', 'staff']),
+  (req, res) => {
+    res.render("admin/orders");
+  }
+)
 
 module.exports = adminRouter;

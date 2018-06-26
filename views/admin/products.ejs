@@ -69,7 +69,11 @@
                                                 <%= p.quantityInStock %>
                                             </td>
                                             <td>
-                                                <span class="label label-primary">Enable</span>
+                                                <% if(p.status == "Enable") {%>
+                                                    <span class="label label-primary"><%= p.status %></span>
+                                                <% }else{ %>
+                                                    <span class="label label-danger"><%= p.status %></span>
+                                                <% } %>
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">

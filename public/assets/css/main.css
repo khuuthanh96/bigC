@@ -1625,8 +1625,7 @@ h2.title {
 }
 
 .cart_product {
-  display: block;
-  margin: 15px -70px 10px 25px;
+  display: block;  
 }
 
 .cart_quantity_button a {
@@ -2522,4 +2521,20 @@ h2.title {
 .signup-form form .radio input{
   width: fit-content !important;
     height: fit-content !important;
+}
+
+#cart_items{
+  background-color: #f5f5f5;
+}
+
+.cart-info{
+  background-color: white;
+}
+
+table.table.table-condensed{
+  background-color: white;
+}
+
+.cart-location{
+  border-bottom: 1px solid #eff0f5;
 }

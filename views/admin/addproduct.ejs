@@ -31,7 +31,7 @@
         </div>
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
 
-        <form method="POST" action="/admin/addproduct" enctype="multipart/form-data" class="md-form">            
+        <form method="POST" action="/admin/addproduct" enctype="multipart/form-data">            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tabs-container">
@@ -55,7 +55,7 @@
                                             <div class="form-group"><label class="col-sm-2 control-label">Size:</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="size">
-                                                        <option>XS</option>
+                                                        <option selected>XS</option>
                                                         <option>S</option>
                                                         <option>M</option>
                                                         <option>L</option>
@@ -68,8 +68,11 @@
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="productLines">
                                                         <% for (let i = 0; i < category.length; i++) { %>
+                                                            <% if(i === 0) { %>
+                                                                <option selected><%= category[i].name %></option>
+                                                            <% }else{ %> 
                                                             <option><%= category[i].name %></option>
-                                                        <% }; %>                                                
+                                                        <% }}; %>                                                
                                                     </select>
                                                 </div>
                                             </div>
@@ -79,7 +82,7 @@
                                             <div class="form-group"><label class="col-sm-2 control-label">Status:</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="status">
-                                                        <option>Enable</option>
+                                                        <option selected>Enable</option>
                                                         <option>Disable</option>
                                                     </select>
                                                 </div>
