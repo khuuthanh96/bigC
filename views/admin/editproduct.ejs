@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/admin/head %>
+    
+    <!-- FooTable -->
+    <link href="/assets/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="/assets/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+
+    <link href="/assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+    <% include ../partials/admin/navigation %> 
+    <div id="page-wrapper" class="gray-bg">
+        <% include ../partials/admin/header %> 
+    
+        <!--breakcrumb-->
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>E-Shopper product list</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>                        
+                    <li class="active">
+                        <strong>Edit Product</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+        <form method="POST" action="/admin/editproduct/<%= productInfo._id %>" enctype="multipart/form-data">            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1"> Product info</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2"> Data</a></li>                                
+                                <li class=""><a data-toggle="tab" href="#tab-3"> Images</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <fieldset class="form-horizontal">
+                                            <div class="form-group"><label class="col-sm-2 control-label">Name:</label>
+                                                <div class="col-sm-10"><input type="text" name="name" class="form-control" value="<%= productInfo.name %>"></div>
+                                            </div>
+                                            <div class="form-group"><label class="col-sm-2 control-label">Price:</label>
+                                                <div class="col-sm-10"><input type="text" name="price" class="form-control" value="<%= productInfo.price %>"></div>
+                                            </div>
+                                            <div class="form-group"><label class="col-sm-2 control-label">Description:</label>
+                                                <div class="col-sm-10">
+                                                    <div class="summernote">
+                                                        <input type="text" name="description" class="form-control" value="<%= productInfo.description %>">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"><label class="col-sm-2 control-label">Product Lines:</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="productLines">
+                                                        <% for (let i = 0; i < category.length; i++) { %>
+                                                            <% if(prodLName === category[i].name) { %>
+                                                                <option selected><%= category[i].name %></option>
+                                                            <% }else{ %>
+                                                                <option><%= category[i].name %></option>
+                                                            <% } %>    
+                                                        <% }; %>                                                
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <fieldset class="form-horizontal">
+                                            <div class="form-group"><label class="col-sm-2 control-label">ID:</label>
+                                                <div class="col-sm-10"><input type="text" disabled class="form-control" value="<%= productInfo._id %>"></div>
+                                            </div>
+                                     
+
+                                            <div class="form-group"><label class="col-sm-2 control-label">Quantity:</label>
+                                                <div class="col-sm-10"><input type="text" name="quantity" class="form-control" value="<%= productInfo.quantityInStock %>"></div>
+                                            </div>
+                                
+                                            <div class="form-group"><label class="col-sm-2 control-label">Status:</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="status" >
+                                                        <% if(productInfo.status === "Enable"){ %>
+                                                        <option selected>Enable</option>
+                                                        <option>Disable</option>
+                                                        <% }else{ %>
+                                                        <option selected>Disable</option>
+                                                        <option>Enable</option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+
+                                    </div>
+                                </div>
+                                
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="clearfix" style="margin-bottom: 15px">
+                                                <label for="upload-image" class="btn btn-danger pull-right">
+
+                                                        <input type="file" accept="image/png" id="upload-image" name="image" onchange="loadFile(event)">
+                                                       
+                                                    </label>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-stripped">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        Image preview
+                                                    </th>
+                                                    <th>
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr>
+                                                                <td>
+                                                                        <img class="centered" id="output" style="
+                                                                        height: auto; 
+                                                                        width: auto; 
+                                                                        max-width: 300px; 
+                                                                        max-height: 300px;"/>
+                                                                </td>
+                                                            
+                                                                <td>
+                                                                    <button id="rmv1" type="button" class="btn btn-white"><i class="fa fa-trash"></i> </button>
+                                                                </td>
+                                                            </tr>
+                                                <% for (let i = 0; i < productInfo.images.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="/images/shop/<%= productInfo.images[i] %>">
+                                                        </td>
+                                                        <td>
+                                                            <i class="btn btn-white"><i class="fa fa-trash"></i>
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
+                                        
+                                             
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+			<div>
+				<button type="submit" class="btn btn-w-m btn-primary">SAVE</button>
+				<a type="button" class="btn btn-w-m btn-primary" href="/admin/products">Cancel</a>
+            </div>
+        </form>    
+        </div>
+        <% include ../partials/admin/footer %> 
+    </div><!--page-wrapper-->
+</div><!--wrapper-->
+<% include ../partials/admin/script %>
+</body>
+</html>
+<script>
+        document.getElementById('rmv1').onclick = function() { 
+        var file = document.getElementById("upload-image");
+        file.value = file.defaultValue;
+    
+        var image = document.getElementById("output");
+        image.src = "";
+        }
+    
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        };
+    
+</script>

@@ -1,0 +1,16 @@
+<!-- category -->
+    <h2>Category</h2>
+    <div class="panel-group category-products" id="accordian">
+        <!--category-productsr-->
+        <% for (let i = 0; i < category.length; i++) { %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href="/shop/<%= category[i].name %>/1"><%= category[i].name %>
+                    </h4>
+                </div>
+            </div>
+        <% }; %>
+    </div>
+    <!--/category-productsr-->
+<!-- /category -->
