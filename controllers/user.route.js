@@ -14,21 +14,43 @@ userRouter.get('/login', (req, res) => {
 
 userRouter.post('/login', passport.authenticate('local', {
     failureRedirect: '/user/login',
-    successRedirect: '/shop',
-    failureFlash: 'Invalid username or password.'
+    successRedirect: '/shop'
 }));
 
 userRouter.get('/logout',
+    isUserLoggedIn,
     (req, res) => {
         console.log(req.isAuthenticated());
-        // req.logOut();
-        // req.destroy();
-        // res.redirect('/shop');
+        req.logOut();
+        req.destroy();
+        res.redirect('/shop')
 })
 
+userRouter.get('/account',
+    isUserLoggedIn,
+    (req, res) => {
+        res.render('page/manage-user-info', {isLogin: req.isAuthenticated()});
+    }
+)
+
 userRouter.post('/signup', (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
+    const {email, name, phone, sex, birthday, password, address} = req.body;
+    User.findOne({email})
+    .then(userExisting => {
+        if(userExisting) return res.send('Email in used');
+        
+        return User.signUp(email, password,name,address,phone,sex,birthday)
+    })
+    .then(user => {
+        return new Promise((resolve, reject) => {
+            req.logIn(user, (err) => {
+              if (err) { reject(err); }
+              resolve(user);
+            });
+        });
+    })
+    .then(() => res.redirect('/'));
+ 
 })
 
 module.exports = userRouter

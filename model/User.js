@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 const {hash, compare} = require('bcrypt');
-const {sign, verify} = require('../lib/jwt');
-const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
-const extractJwt = require('passport-jwt').ExtractJwt;
-const jwtStrategy = require('passport-jwt').Strategy;
+
 
 const userSchema = mongoose.Schema({
     email: { type: String, require: true, trim: true, unique: true, lowercase: true },
@@ -12,23 +8,25 @@ const userSchema = mongoose.Schema({
     name: { type: String, require: true, trim: true, minlength: 6, maxlength: 30 },
     phone: { type: String, trim: true, minLength: 9, maxlength: 12 },
     sex: { type: String, enum: ['male', 'female'], default: 'male' },
-    dayOfBirth: { type: Date },
+    dayOfBirth: { type: String },
     address: { type: String, require: true },
     roles: {
         type: String,
         enum: ['user', 'staff', 'admin'],
         default: 'user'
-    }
+    },
+    order: [{ type: mongoose.Schema.Types.ObjectId, href: 'Order'}]
 });
 
 const UserModel = mongoose.model('User', userSchema);
 
 class User extends UserModel {
-    static async signUp(email, password, name, address) {
+    static async signUp(email, password, name, address, phone, sex, dayOfBirth) {
+        console.log(email, password, name, address, phone, sex, dayOfBirth)
         const encrypted = await hash(password, 8);
-        const user = new User({ email, password: encrypted, name, address });
+        const user = new User({ email, password: encrypted, name, address, phone, sex, dayOfBirth });
         const error = user.validateSync();
-        if (error) throw new Error('User info is invalid!');
+        if (error) throw new Error(error);
 
         await user.save()
         .catch(error => {
