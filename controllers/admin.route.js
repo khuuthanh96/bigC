@@ -70,7 +70,6 @@ adminRouter.post('/editproduct/:idProduct',
       const idProduct = req.params.idProduct;
       const info = req.body;
       const prodL = await ProductLines.findOne({name: info.productLines});
-      console.log(info)
 
       Product.findByIdAndUpdate(idProduct, { 
         name: info.name, 

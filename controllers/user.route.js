@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const { isUserLoggedIn, rolesAuthorized } = require('../lib/auth.middleware');
+const { isUserLoggedIn, isActiveAccount, rolesAuthorized } = require('../lib/auth.middleware');
 const User = require('../model/User');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
@@ -78,6 +78,12 @@ userRouter.post('/signup', (req, res) => {
     })
 })
 
+userRouter.get('/inactive', 
+    isUserLoggedIn,
+    (req, res) => {
+        res.render('page/verify', { isLogin: req.isAuthenticated()});
+});
+
 userRouter.get('/verify/:activeCode', (req, res) => {
     const code = req.params.activeCode;
     User.findOne({activeCode: code})
@@ -90,11 +96,14 @@ userRouter.get('/verify/:activeCode', (req, res) => {
             });
         })
     })
-    .then( _ => res.redirect('/'))
-})
+    .then( _ =>{
+        res.redirect('/')
+    })
+});
 
 userRouter.get('/password', 
     isUserLoggedIn,
+    isActiveAccount,
     (req, res) => {
         res.render('page/user-change-pass', {
             isLogin: req.isAuthenticated(), 
