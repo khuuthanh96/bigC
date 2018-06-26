@@ -27,6 +27,7 @@ a:focus {
 }
 
 a {
+  color: #000;
   -webkit-transition: 300ms;
   -moz-transition: 300ms;
     -o-transition: 300ms;
@@ -2519,4 +2520,7 @@ h2.title {
   color: #FE980F;
 }
 
+.nav-manage-account__list{
+  padding: 0;
+}
 
