@@ -54,6 +54,20 @@ userRouter.get('/forgot-password',
     }
 )
 
+
+userRouter.post('/reset-password',(req,res) => {
+    const{newPass} = req.body;
+    
+    User.changePassword(req.user._id, newPass)
+            .then(user => { 
+                console.log(user);
+                req.flash('msg', 'Successfully!');
+                console.log('hello kiki');
+                return res.redirect('/user/login')
+            })
+}
+)
+
 userRouter.post('/signup', (req, res) => {
     const {email, name, phone, sex, birthday, password, address} = req.body;
     User.findOne({email})

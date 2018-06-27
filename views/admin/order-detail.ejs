@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/admin/head %>
+</head>
+
+<body>
+    <div id="wrapper">
+        <% include ../partials/admin/navigation %>
+            <div id="page-wrapper" class="gray-bg">
+                <% include ../partials/admin/header %>
+
+                    <!--breakcrumb-->
+                    <div class="row wrapper border-bottom white-bg page-heading">
+                        <div class="col-lg-10">
+                            <h2>E-Shopper order-detail</h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="active">
+                                    <span>Orders</span>
+                                </li>
+                                <li class="active">
+                                    <strong>Order-detail</strong>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="ibox float-e-margins">
+
+                                    <div class="ibox-content">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Name: Phuong Thao</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Email: phuongthao@gmail.com</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address: TPHCM </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Phone: 0123456</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Birthday: 01/11/1997</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-content">
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Shipper
+                                                        <a href="#" style="float: right" data-toggle="modal" data-target="#edit-order">
+                                                            <i class="fa fa-pencil-square-o"></i>
+                                                        </a>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Delivery method: Thanh toán tại nhà</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Payment method: Thanh toán tại nhà</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status: pending</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address: TPHCM</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Phone: 0123456</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ibox float-e-margins">
+
+                                <div class="ibox-content">
+                                    <div class="table-responsive m-t">
+                                        <table class="table invoice-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item List</th>
+                                                    <th>Description</th>
+                                                    <th>Quantity</th>
+                                                    <th>Unit Price</th>
+
+                                                    <th>Total Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="images/cart/one.png" alt="" class="img-lg">
+                                                    </td>
+                                                    <td>product 1</td>
+                                                    <td>1</td>
+                                                    <td>$26.00</td>
+
+                                                    <td>$31,98</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="images/cart/one.png" alt="" class="img-lg">  
+                                                    </td>
+                                                    <td>product 1</td>
+                                                    <td>1</td>
+                                                    <td>$26.00</td>
+
+                                                    <td>$31,98</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="images/cart/one.png" alt="" class="img-lg"> 
+                                                    </td>
+                                                    <td>product 1</td>
+                                                    <td>1</td>
+                                                    <td>$26.00</td>
+
+                                                    <td>$31,98</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <table class="table invoice-total">
+                                            <tbody>
+                                            <tr>
+                                                <td><strong>Sub Total :</strong></td>
+                                                <td>$1026.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>TAX :</strong></td>
+                                                <td>$235.98</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>TOTAL :</strong></td>
+                                                <td>$1261.98</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal inmodal" id="edit-order" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content animated fadeIn">
+                                <form action="">
+                                    <div class="modal-body">
+                                        <div class="panel-body">
+
+                                            <fieldset class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Delivery method:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="deliveryMethod" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Payent method:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="paymentMethod" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Status:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" name="productLines">
+                                                            <option>Pending</option>
+                                                            <option>Shipped</option>
+                                                            <option>Cancel</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Address:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="address" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Phone:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="name" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">Date modified:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="date" name="dateModified" class="form-control">
+
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <% include ../partials/admin/footer %>
+            </div>
+            <!--page-wrapper-->
+    </div>
+    <!--wrapper-->
+    <% include ../partials/admin/script %>
+
+</body>
+
+</html>
