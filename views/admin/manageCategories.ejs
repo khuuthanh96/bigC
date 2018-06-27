@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/admin/head %>
+
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <% include ../partials/admin/navigation %>
+            <div id="page-wrapper" class="gray-bg">
+                <% include ../partials/admin/header %>
+
+                    <!--breakcrumb-->
+                    <div class="row wrapper border-bottom white-bg page-heading">
+                        <div class="col-lg-10">
+                            <h2>E-Shopper Category List</h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="active">
+                                    <strong>Manage Categories</strong>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <form action="">
+                                <div class="row">
+                                    <div class="form-group clearfix" id="line-cate1">
+                                        <div class="col-xs-10 col-sm-8 col-md-6 ">
+                                            <input type="text" disabled="" value="Shirt" class="form-control" id="cate1">
+                                        </div>
+                                        <button class="btn btn-primary btn-circle" type="button" onclick="edit('cate1')">
+                                            <i class="fa fa-list"></i>
+                                        </button>
+                                        <button class="btn btn-warning btn-circle" type="button" onclick="deleteCate('line-cate1')">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group clearfix" id="line-cate2">
+                                        <div class="col-xs-10 col-sm-8 col-md-6 ">
+                                            <input type="text" disabled="" value="Pant" class="form-control" id="cate2">
+                                        </div>
+                                        <button class="btn btn-primary btn-circle" type="button" onclick="edit('cate2')">
+                                            <i class="fa fa-list"></i>
+                                        </button>
+                                        <button class="btn btn-warning btn-circle" type="button" onclick="deleteCate('line-cate2')">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group clearfix" id="line-cate3">
+                                        <div class="col-xs-10 col-sm-8 col-md-6 ">
+                                            <input type="text" disabled="" value="Sneaker" class="form-control" id="cate3">
+                                        </div>
+                                        <button class="btn btn-primary btn-circle" type="button" onclick="edit('cate3')">
+                                            <i class="fa fa-list"></i>
+                                        </button>
+                                        <button class="btn btn-warning btn-circle" type="button" onclick="deleteCate('line-cate3')">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group clearfix">
+                                        <div class="col-xs-10 col-sm-8 col-md-6 ">
+                                            <input type="text" placeholder="New" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                        <button type="button" class="btn btn-w-m btn-primary">SAVE</button>
+                                        <button type="button" class="btn btn-w-m btn-primary">Cancel</button>
+                                    </div>
+                            </form>
+                            </div>
+
+                        </div>
+
+                        
+                    </div>
+                    <% include ../partials/admin/footer %>
+            </div>
+            <!--page-wrapper-->
+    </div>
+    <!--wrapper-->
+    <% include ../partials/admin/script %>
+        <!-- Custom and plugin javascript -->
+        <script>
+            function edit(id){
+                document.getElementById(id).removeAttribute("disabled");                
+            }
+            function deleteCate(id){
+                var cate = document.getElementById(id);
+                cate.parentNode.removeChild(cate);         
+            }
+        </script>
+        <script>
+            
+        </script>
+
+</body>
+
+</html>
