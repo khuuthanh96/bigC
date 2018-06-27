@@ -21,9 +21,8 @@
 						<!--login form-->
 						<h2>Login to your account</h2>
 						<form action="/user/login" method="POST">
-			
-							<input type="email" placeholder="Email Address" name="email"/>
-							<input type="password" placeholder="Password" name="password"/>
+							<input type="email" placeholder="Email Address" name="email" />
+							<input type="password" placeholder="Password" name="password" />
 							<button type="submit" class="btn btn-default">Login</button>
 						</form>
 					</div>
@@ -36,38 +35,41 @@
 					<div class="signup-form">
 						<!--sign up form-->
 						<% if(error){ %>
-							<span class="text-danger" style="font-size: 30px"><%= error %></span>
-						<% } %>
-						<h2>New User Signup!</h2>
-						<form action="/user/signup" method="POST">
-							<label for="">Name</label>
-							<input type="text" placeholder="Name" name="name" />
-							<label for="">Email</label>
-							<input type="email" placeholder="Email Address" name="email"/>
-							<label for="">Password</label>
-							<input type="password" placeholder="Password" name="password"/>
-							<label for="">Re-password</label>
-							<input type="password" placeholder="Password" name="rePassword"/>
-							<label for="">Birthday</label>
-							<input type="date"  name="birthday"/>
-							<label for="">Address</label>
-							<input type="text" placeholder="Address" name="address"/>
-							<label for="">Phone</label>
-							<input type="number" placeholder="Phone Number" name = "phone"/>
-		
-							<div class="radio">
-								<label>
-									<input type="radio" name="sex" value="male" checked>Male
-								</label>								
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="sex" value="female" >Female
-								</label>								
-							</div>
+							<span class="text-danger" style="font-size: 30px">
+								<%= error %>
+							</span>
+							<% } %>
+								<h2>New User Signup!</h2>
+								<form action="/user/signup" method="POST">
+									<label for="">Name*</label>
+									<input type="text" placeholder="Name" name="name" required>
+									<label for="">Email*</label>
+									<input type="email" placeholder="Email Address" name="email" required>
+									<label for="">Password*</label>
+									<input type="password" placeholder="Password" name="password" id="password" required>
+									<label for="">Repeat password*</label>
+									<input type="password" placeholder="Repeat password" name="rePassword" id="rePassword" required onchange="check()">
+									<div><span id="errorRePass" class="error"></span></div>
+									<label for="">Birthday</label>
+									<input type="date" name="birthday" />
+									<label for="">Address</label>
+									<input type="text" placeholder="Address" name="address" required>
+									<label for="">Phone</label>
+									<input type="number" placeholder="Phone Number" name="phone" />
 
-							<button type="submit" class="btn btn-default">Signup</button>
-						</form>
+									<div class="radio">
+										<label>
+											<input type="radio" name="sex" value="male" checked>Male
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="sex" value="female">Female
+										</label>
+									</div>
+
+									<button type="submit" class="btn btn-default"  value="Submit">Signup</button>
+								</form>
 					</div>
 					<!--/sign up form-->
 				</div>
@@ -78,8 +80,24 @@
 
 
 	<footer id="footer">
-		<% include ../partials/footer %>		
+		<% include ../partials/footer %>
 	</footer>
+
+	<script>
+		function check() {
+			var pass = document.getElementById("password").value;			
+			var rePass = document.getElementById("rePassword").value;
+			if (pass!=rePass){
+				document.getElementById("errorRePass").innerHTML="Passwords do not match please re-enter!";
+				document.getElementById("rePassword").value = "";
+				
+			}
+			else if (pass===rePass){
+				document.getElementById("errorRePass").innerHTML="";
+			}
+			
+		}
+	</script>
 </body>
 
 </html>

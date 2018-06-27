@@ -1427,8 +1427,7 @@ h2.title {
 
 #form {
   display: block;
-  margin-bottom: 185px;
-  margin-top: 185px;
+  margin-bottom: 185px;  
   overflow: hidden;
 }
 
@@ -2528,3 +2527,7 @@ h2.title {
   float: right;
 }
 
+.signup-form form .radio input{
+  width: fit-content !important;
+    height: fit-content !important;
+}
