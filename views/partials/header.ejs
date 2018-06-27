@@ -24,8 +24,9 @@
                             
                             <li>
                                 <% if(isLogin) { %>
+                                    <span style="font-weight: bold"><%= user.name %></span>
                                     <a href="/user/logout">
-                                        <i class="fa fa-sign-out"></i>Logout</a>
+                                        Logout</a>
                                 <% } else { %>
                                     <a href="/user/login">
                                         <i class="fa fa-lock"></i>Login</a>

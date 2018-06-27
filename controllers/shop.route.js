@@ -5,29 +5,23 @@ const ProductLines = require('../model/ProductLines');
 const {rolesAuthorized, isLoggedIn} = require('../lib/auth.middleware');
 
 /* GET shop page. */
-shopRouter.get('/', (req, res, next) => {
-    console.log(req.isAuthenticated());
+shopRouter.get('/', (req, res) => {
     res.redirect('/shop/tshirt/1');    
 });
 
-shopRouter.get('/product/:id', (req, res, next) => {
-    console.log("Product details route",req.isAuthenticated());
+shopRouter.get('/product/:id', (req, res) => {
     Product.findById(req.params.id)
     .then(product => {
-        res.render('page/productDetails', { product, isLogin: req.isAuthenticated() });
+        res.render('page/productDetails', { product, isLogin: req.isAuthenticated(), user: req.user });
     })
 });
 
-shopRouter.get('/:productline', (req, res, next) => {
-    console.log("Product line route",req.isAuthenticated());
-
+shopRouter.get('/:productline', (req, res) => {
     const productline = req.params.productline;
     res.redirect(`/shop/${productline}/1`);
 });
 
-shopRouter.get('/:productline/:page', (req, res, next) => {
-    console.log("Product line page route",req.isAuthenticated());
-
+shopRouter.get('/:productline/:page', (req, res) => {
     const perPage = 9;
     const page = req.params.page || 1;
     const productline = req.params.productline;
@@ -39,21 +33,26 @@ shopRouter.get('/:productline/:page', (req, res, next) => {
         .skip((perPage * page) - perPage)
     })
     .then(products => {
+        if(products.length === 0) return res.render('page/shop', {
+            products,
+            current: page,
+            pages: Math.ceil(1 / perPage),
+            productlines: productline,
+            isLogin: req.isAuthenticated(),
+            user: req.user
+        })
         Product.count({ productLines: products[0].productLines })
         .then(length => {
             res.render('page/shop', {
                 products,
                 current: page,
                 pages: Math.ceil(length / perPage),
-                productlines: products[0].productLines,
-                isLogin: req.isAuthenticated()
+                productlines: productline,
+                isLogin: req.isAuthenticated(),
+                user: req.user
             })
         })
     })
-    .catch(err => {
-        res.render('page/404');
-        return next(err);
-    });
 });
 
 module.exports = shopRouter;

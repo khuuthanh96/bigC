@@ -156,11 +156,27 @@ adminRouter.get('/showuser',
     .catch(err => console.log(err));
 });
 
-adminRouter.get('/showorder',
+adminRouter.get('/orders',
   isLoggedIn,
   rolesAuthorized(['admin', 'staff']),
   (req, res) => {
     res.render("admin/orders");
+  }
+)
+
+adminRouter.get('/editorder', 
+  isLoggedIn,
+  rolesAuthorized(['admin', 'staff']),
+  (req, res) => {
+    res.render("admin/order-detail");
+  }
+)
+
+adminRouter.get('/manageCategories', 
+  isLoggedIn,
+  rolesAuthorized(['admin', 'staff']),
+  (req, res) => {
+    res.render('admin/manageCategories')
   }
 )
 

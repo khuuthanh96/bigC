@@ -23,7 +23,7 @@ userRouter.get('/', (req, res) => {
 })
 
 userRouter.get('/login', (req, res) => {
-    res.render('page/login-register', {isLogin: false, error: req.flash('error')});
+    res.render('page/login-register', {isLogin: false, error: req.flash('error'), user: req.user});
 })
 
 userRouter.post('/login', passport.authenticate('local', {
@@ -44,7 +44,7 @@ userRouter.get('/logout',
 userRouter.get('/account',
     isUserLoggedIn,
     (req, res) => {
-        res.render('page/manage-user-info', {isLogin: req.isAuthenticated()});
+        res.render('page/user-info', {isLogin: req.isAuthenticated(), user: req.user});
     }
 )
 
@@ -101,7 +101,7 @@ userRouter.post('/signup', (req, res) => {
 userRouter.get('/inactive', 
     isUserLoggedIn,
     (req, res) => {
-        res.render('page/verify', { isLogin: req.isAuthenticated()});
+        res.render('page/verify', { isLogin: req.isAuthenticated(), user: req.user});
 });
 
 userRouter.get('/verify/:activeCode', (req, res) => {
@@ -123,12 +123,12 @@ userRouter.get('/verify/:activeCode', (req, res) => {
 
 userRouter.get('/password', 
     isUserLoggedIn,
-    isActiveAccount,
     (req, res) => {
         res.render('page/user-change-pass', {
             isLogin: req.isAuthenticated(), 
             error: req.flash('error'), 
-            msg: req.flash('msg')
+            msg: req.flash('msg'),
+            user: req.user
         })
     }
 )
