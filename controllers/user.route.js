@@ -48,6 +48,12 @@ userRouter.get('/account',
     }
 )
 
+userRouter.get('/forgot-password',
+    (req, res) => {
+        res.render('page/forgot-password');
+    }
+)
+
 userRouter.post('/signup', (req, res) => {
     const {email, name, phone, sex, birthday, password, address} = req.body;
     User.findOne({email})
