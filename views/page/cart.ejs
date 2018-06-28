@@ -13,9 +13,9 @@
 
 
 <body>
-		<header id="header">
-				<% include ../partials/header %>
-			</header>
+	<header id="header">
+		<% include ../partials/header %>
+	</header>
 	<!--/header-->
 
 	<section id="cart_items">
@@ -33,11 +33,11 @@
 					<table class="table table-condensed">
 						<thead>
 							<tr class="cart_menu">
-								<td class="image">Item</td>
-								<td class="description"></td>
-								<td class="price">Price</td>
-								<td class="quantity">Quantity</td>
-								<td class="total">Total</td>
+								<td class="image ">Item</td>
+								<td class="description ">Description</td>
+								<td class="price ">Price</td>
+								<td class="quantity ">Quantity</td>
+								<td class="total ">Total</td>
 								<td></td>
 							</tr>
 						</thead>
@@ -59,9 +59,8 @@
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a class="cart_quantity_up" href=""> + </a>
-										<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-										<a class="cart_quantity_down" href=""> - </a>
+											<input class="cart_quantity_input" type="number" name="quantity" value="2" autocomplete="off" min="1" id="item2">
+
 									</div>
 								</td>
 								<td class="cart_total">
@@ -91,9 +90,8 @@
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a class="cart_quantity_up" href=""> + </a>
-										<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-										<a class="cart_quantity_down" href=""> - </a>
+											<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" min="1" id="item3">
+
 									</div>
 								</td>
 								<td class="cart_total">
@@ -122,9 +120,7 @@
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<a class="cart_quantity_up" href=""> + </a>
-										<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-										<a class="cart_quantity_down" href=""> - </a>
+										<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" min="1" id="item3">
 									</div>
 								</td>
 								<td class="cart_total">
@@ -141,7 +137,7 @@
 				</div>
 			</div>
 			<div class="col-md-4 cart-info">
-
+				<!--
 				<div class="cart-location">
 					<p>Location</p>
 					<div>
@@ -149,7 +145,7 @@
 						<span>Hồ Chí Minh,Quận Tân Bình,Phường 12</span>
 						<a href="" class="btn-change-location">change</a>
 					</div>
-				</div>
+				</div>-->
 				<div class="total_area">
 					<h4 class="text-uppercase">ORDER SUMARY</h4>
 					<ul>
@@ -159,14 +155,12 @@
 						<li>Eco Tax
 							<span>$2</span>
 						</li>
-						<li>Shipping Cost
-							<span>Free</span>
-						</li>
+						
 						<li>Total
 							<span>$61</span>
 						</li>
 					</ul>
-					<a class="btn btn-default update" href="">Update</a>
+
 					<a class="btn btn-default check_out" href="">Check Out</a>
 				</div>
 			</div>
@@ -182,6 +176,13 @@
 	</footer>
 
 	<% include ../partials/head %>
+
+		<script>
+			function plus(id) {
+				var count = document.getElementById(id).value;
+				document.getElementById(id).value = count + 1;
+			}
+		</script>
 </body>
 
 </html>

@@ -17,7 +17,8 @@ shopRouter.get('/product/:id', (req, res) => {
 });
 
 shopRouter.get('/cart', (req, res) => {
-    res.render('page/cart');
+    console.log(req.isAuthenticated());
+    res.render('page/cart' , { isLogin: req.isAuthenticated()});
 });
 
 shopRouter.get('/:productline', (req, res) => {
