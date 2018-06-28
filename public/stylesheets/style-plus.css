@@ -31,3 +31,8 @@ header{
 .cart_info {
     background-color: white;
 }
+
+.cart_quantity_button {
+    display: flex;
+}
+

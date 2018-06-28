@@ -40,10 +40,14 @@
 								<td class="price ">Price</td>
 								<td class="quantity ">Quantity</td>
 								<td class="total ">Total</td>
+								<td></td>
 							</tr>
 						</thead>
 						<tbody>
-							<% for( let i in cart.items ) {%>
+							<% 
+							for( let i in cart.items ) {
+								
+							%>
 							<tr>
 								<td class="cart_product">
 										<img style="height: 100px; width: 100px" src="/images/shop/<%= cart.items[i].item.images[0] %>">
@@ -52,6 +56,7 @@
 								<td class="cart_description">
 									<h4>
 										<%= cart.items[i].item.name %>
+										
 									</h4>
 						
 								</td>
@@ -60,8 +65,10 @@
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-											<input class="cart_quantity_input" type="number" name="quantity" value="<%= cart.items[i].qty %>" autocomplete="off" min="1" id="item2">
-									</div>
+										<button >+</button>
+											<input class="cart_quantity_input" type="text" name="quantity" value="<%= cart.items[i].qty %>" autocomplete="off" min="1" id="" size="2">
+										<button>-</button>
+										</div>
 								</td>
 								<td class="cart_total">
 									<p class="cart_total_price"><%= cart.items[i].price %></p>
