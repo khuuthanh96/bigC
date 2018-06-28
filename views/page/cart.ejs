@@ -65,9 +65,9 @@
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-										<button >+</button>
+										<a href="/shop/add-in-cart/<%=i%>">+</a>
 											<input class="cart_quantity_input" type="text" name="quantity" value="<%= cart.items[i].qty %>" autocomplete="off" min="1" id="" size="2">
-										<button>-</button>
+										<a href="/shop/delete-in-cart/<%=i%>">-</a>
 										</div>
 								</td>
 								<td class="cart_total">
@@ -79,6 +79,7 @@
 									</a>
 								</td>
 							</tr>
+							<input type="text" hidden id="itemId" value="<%= i %>">
 							<% } %>
 						</tbody>
 					</table>
@@ -124,6 +125,18 @@
 			function plus(id) {
 				var count = document.getElementById(id).value;
 				document.getElementById(id).value = count + 1;
+			}
+
+			function increaseItem() {
+				console.log('clicked')
+				$.ajax({
+					type: 'GET',
+					url: 'http://localhost:3000/shop/add-to-cart/'
+				})
+			}
+
+			function decreaseItem() {
+
 			}
 		</script>
 </body>
