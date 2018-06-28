@@ -11,7 +11,7 @@ shopRouter.get('/', (req, res) => {
 
 shopRouter.get('/cart', (req, res) => {
     let emptyCart = new Cart({});
-    res.render('page/cart', {isLogin: req.isAuthenticated(), cart: req.session.cart ? req.session.cart : emptyCart, user: req.user });
+    res.render('page/cart', {isLogin: req.isAuthenticated(), cart: req.session.cart ? req.session.cart : cart, user: req.user });
 });
 
 shopRouter.get('/add-to-cart/:id', (req, res) => {
@@ -29,8 +29,8 @@ shopRouter.get('/add-to-cart/:id', (req, res) => {
 
 shopRouter.get('/cart-delete-item/:id', (req, res) => {
     const id = req.params.id;
-    req.session.cart.totalQty = req.session.cart.totalQty - req.session.cart.items[id].qty;
-    req.session.cart.totalPrice = req.session.cart.totalPrice - req.session.cart.items[id].price;
+    req.session.cart.totalQty -= req.session.cart.items[id].qty;
+    req.session.cart.totalPrice -= req.session.cart.items[id].price;
     delete req.session.cart.items[id];
     res.redirect('/shop/cart');
 })
@@ -41,6 +41,31 @@ shopRouter.get('/product/:id', (req, res) => {
         res.render('page/productDetails', { product, isLogin: req.isAuthenticated(), user: req.user });
     })
 });
+
+shopRouter.get('/add-in-cart/:id', (req, res) => {
+    const productId = req.params.id;
+    let cart = new Cart(req.session.cart ? req.session.cart.items : {});
+    
+    Product.findById(productId)
+    .then(product => {
+        cart.add(product, product._id);
+        req.session.cart = cart;
+        console.log(req.session.cart);
+        res.redirect('/shop/cart');
+    }) 
+})
+
+shopRouter.get('/delete-in-cart/:id', (req, res) => {
+    const id = req.params.id;
+    req.session.cart.totalQty -= 1;
+    req.session.cart.items[id].qty -= 1;
+    req.session.cart.items[id].price -= req.session.cart.items[id].item.price;
+    req.session.cart.totalPrice -= req.session.cart.items[id].item.price;
+    if(req.session.cart.items[id].qty == 0){
+        delete req.session.cart.items[id];
+    }
+    res.redirect('/shop/cart');
+})
 
 shopRouter.post('/cart',
     isUserLoggedIn,
