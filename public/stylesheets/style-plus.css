@@ -36,3 +36,21 @@ header{
     display: flex;
 }
 
+.account-content{
+    margin: 50px 0;
+}
+
+.info-user{
+    background-color: white;
+    padding: 30px 10px;
+}
+
+.nav-manage-account{
+    background-color: white;
+    padding: 20px 10px;
+}
+
+.user-password{
+    background-color: white;
+    padding: 30px 30px;
+}

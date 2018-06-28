@@ -75,7 +75,7 @@ app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/shop', shopRouter);
 app.use('/user', userRouter);
-
+app.get('/home', (req ,res) => res.render('page/home'));
 app.get('*', (req ,res) => res.render('page/404'));
 
 console.log("Server listening")
