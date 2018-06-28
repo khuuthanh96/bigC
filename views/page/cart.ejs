@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,142 +29,77 @@
 					<li class="active">Shopping Cart</li>
 				</ol>
 			</div>
+			<form action="/shop/cart" method="POST">
 			<div class="col-md-8 cart-list-product">
 				<div class="table-responsive cart_info">
 					<table class="table table-condensed">
 						<thead>
 							<tr class="cart_menu">
 								<td class="image ">Item</td>
-								<td class="description ">Description</td>
+								<td class="description ">Name</td>
 								<td class="price ">Price</td>
 								<td class="quantity ">Quantity</td>
 								<td class="total ">Total</td>
-								<td></td>
 							</tr>
 						</thead>
 						<tbody>
+							<% for( let i in cart.items ) {%>
 							<tr>
 								<td class="cart_product">
-									<a href="">
-										<img src="../../public/images/cart/one.png" alt="">
-									</a>
+										<img style="height: 100px; width: 100px" src="/images/shop/<%= cart.items[i].item.images[0] %>">
 								</td>
+								
 								<td class="cart_description">
 									<h4>
-										<a href="">Colorblock Scuba</a>
+										<%= cart.items[i].item.name %>
 									</h4>
-									<p>Web ID: 1089772</p>
+						
 								</td>
 								<td class="cart_price">
-									<p>$59</p>
+									<p><%= cart.items[i].price %></p>
 								</td>
 								<td class="cart_quantity">
 									<div class="cart_quantity_button">
-											<input class="cart_quantity_input" type="text" name="quantity" value="2" autocomplete="off" min="1" id="item2">
-
+											<input class="cart_quantity_input" type="number" name="quantity" value="<%= cart.items[i].qty %>" autocomplete="off" min="1" id="item2">
 									</div>
 								</td>
 								<td class="cart_total">
-									<p class="cart_total_price">$59</p>
+									<p class="cart_total_price"><%= cart.items[i].price %></p>
 								</td>
 								<td class="cart_delete">
-									<a class="cart_quantity_delete" href="">
+									<a class="cart_quantity_delete" href="/shop/cart-delete-item/<%= i %>">
 										<i class="fa fa-times"></i>
 									</a>
 								</td>
 							</tr>
-
-							<tr>
-								<td class="cart_product">
-									<a href="">
-										<img src="../../public/images/cart/two.png" alt="">
-									</a>
-								</td>
-								<td class="cart_description">
-									<h4>
-										<a href="">Colorblock Scuba</a>
-									</h4>
-									<p>Web ID: 1089772</p>
-								</td>
-								<td class="cart_price">
-									<p>$59</p>
-								</td>
-								<td class="cart_quantity">
-									<div class="cart_quantity_button">
-											<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" min="1" id="item3">
-
-									</div>
-								</td>
-								<td class="cart_total">
-									<p class="cart_total_price">$59</p>
-								</td>
-								<td class="cart_delete">
-									<a class="cart_quantity_delete" href="">
-										<i class="fa fa-times"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="cart_product">
-									<a href="">
-										<img src="../../public/images/cart/three.png" alt="">
-									</a>
-								</td>
-								<td class="cart_description">
-									<h4>
-										<a href="">Colorblock Scuba</a>
-									</h4>
-									<p>Web ID: 1089772</p>
-								</td>
-								<td class="cart_price">
-									<p>$59</p>
-								</td>
-								<td class="cart_quantity">
-									<div class="cart_quantity_button">
-										<input class="cart_quantity_input" type="number" name="quantity" value="1" autocomplete="off" min="1" id="item3">
-									</div>
-								</td>
-								<td class="cart_total">
-									<p class="cart_total_price">$59</p>
-								</td>
-								<td class="cart_delete">
-									<a class="cart_quantity_delete" href="">
-										<i class="fa fa-times"></i>
-									</a>
-								</td>
-							</tr>
+							<% } %>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<div class="col-md-4 cart-info">
-				<!--
-				<div class="cart-location">
-					<p>Location</p>
-					<div>
-						<i class="fas fa-map-marker-alt fa-2x" style="margin-right: 10px"></i>
-						<span>Hồ Chí Minh,Quận Tân Bình,Phường 12</span>
-						<a href="" class="btn-change-location">change</a>
-					</div>
-				</div>-->
 				<div class="total_area">
 					<h4 class="text-uppercase">ORDER SUMARY</h4>
 					<ul>
+						<li>Quantity
+							<span><%= cart.totalQty %></span>
+						</li>
 						<li>Cart Sub Total
-							<span>$59</span>
+							<span><%= cart.totalPrice %></span>
 						</li>
 						<li>Eco Tax
-							<span>$2</span>
+							<span>$0</span>
 						</li>
 						
 						<li>Total
-							<span>$61</span>
+							<span><%= cart.totalPrice %></span>
 						</li>
 					</ul>
 
-					<a class="btn btn-default check_out" href="">Check Out</a>
+					<button class="btn btn-default check_out" type="submit">Check Out</button>
 				</div>
 			</div>
+		</form>
 		</div>
 	</section>
 	<!--/#cart_items-->
