@@ -22,3 +22,12 @@ body{
 header{
     background-color: #1ab394;
 }
+
+.cart-info{
+    background-color: white;
+    padding: 10px 20px;
+}
+
+.cart_info {
+    background-color: white;
+}

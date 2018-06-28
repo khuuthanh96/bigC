@@ -32,6 +32,10 @@ shopRouter.get('/product/:id', (req, res) => {
     })
 });
 
+shopRouter.get('/cart', (req, res) => {
+    console.log(req.isAuthenticated());
+    res.render('page/cart' , { isLogin: req.isAuthenticated()});
+});
 
 shopRouter.get('/:productline', (req, res) => {
     const productline = req.params.productline;
