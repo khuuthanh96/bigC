@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+    <header>
+        
+    </header>
+    <!--/header-->
+
+    <section class="checkout">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="active">Shopping Cart</li>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <div class="delivery-method order-box">
+                    <div class="delivery-method__title">
+                        <h2 class="text-uppercase">
+                            delivery method
+                        </h2>
+                    </div>
+                    <div class="delivery-method__content">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    <strong>Standard</strong>
+                                </p>
+                                <p>3-4 days</p>
+                                <p>30.000đ</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                    <strong>Standard</strong>
+                                </p>
+                                <p>2-3 days</p>
+                                <p>40.000đ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-method order-box">
+                    <div class="payment-method__title">
+                        <h2 class="text-uppercase">payment-method</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Cash on delivery</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>Stranfer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 oder-sumary order-box">
+
+                <form action="" method="">
+                    <div class="order-sumary__title">
+                        <h2 class="text-uppercase">Shipping & billing</h2>
+                    </div>
+                    <!--
+                    <p>Ship to</p>
+                    <div class="oder-customer-info">
+                        <p class="order-customer-info__name"><strong>Trần Lê Phương Thảo</strong></p>
+                        <p class="order-customer-info__address"></p>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="">Name*</label>
+                        <input class="form-control" type="text" placeholder="Name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Address*</label>
+                        <input class="form-control" type="text" placeholder="Address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Phone*</label>
+                        <input class="form-control" type="number" placeholder="Phone Number" name="phone" required>
+                    </div>
+                    <div class="order-sumary__title">
+                        <h2 class="text-uppercase">Sumary order</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">Subtotal
+                            <span>(2 items)</span>
+                        </div>
+                        <div class="col-xs-6">500.000đ</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">Shipping fee</div>
+                        <div class="col-xs-6">30.000đ</div>
+                    </div>
+                    
+                    <button data-toggle="button" class="btn btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!--/#cart_items-->
+
+
+
+    <footer id="footer">
+        <!--Footer-->
+        <% include ../partials/footer %>
+    </footer>
+
+    <% include ../partials/js %>
+</body>
+
+</html>
