@@ -85,7 +85,7 @@ userRouter.post('/signup', (req, res) => {
         const mailOptions = {
             from: 'Eshopper Verify Email <tempthanh321@gmail.com>', // sender address
             to: email, // list of receivers
-            subject: 'Verify your account Eshopper', // Subject line
+            subject: 'Verify your account', // Subject line
             html: `
             <h1>Hello ${user.name}</h1>
             <p>Press link to verify your account!!!! hihi</p>
@@ -158,4 +158,5 @@ userRouter.post('/password',
         })
     }
 )
+
 module.exports = userRouter

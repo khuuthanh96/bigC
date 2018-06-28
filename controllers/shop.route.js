@@ -16,6 +16,10 @@ shopRouter.get('/product/:id', (req, res) => {
     })
 });
 
+shopRouter.get('/cart', (req, res) => {
+    res.render('page/cart');
+});
+
 shopRouter.get('/:productline', (req, res) => {
     const productline = req.params.productline;
     res.redirect(`/shop/${productline}/1`);
