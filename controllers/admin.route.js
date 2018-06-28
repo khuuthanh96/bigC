@@ -14,12 +14,12 @@ const uploadConfig = require('../lib/uploadImageConfig');
 const uploadImage = uploadConfig.single('image')
 
 /* GET users listing. */
-adminRouter.get('/', function(req, res, next) {
+adminRouter.get('/', (req, res) => {
   res.redirect('/admin/login');
 });
 
 adminRouter.get('/login', (req, res, next) => {
-  res.render('admin/login');
+  res.render('admin/login', {user: req.user, error: req.flash('error')});
 });
 
 adminRouter.post('/login',passport.authenticate('local', {
@@ -34,6 +34,7 @@ adminRouter.get('/logout',
   (req, res) => {
     req.logOut();
     req.destroy();
+    console.log(res.locals.category);
     res.redirect('/admin/login');
 })
 
@@ -43,7 +44,7 @@ adminRouter.get('/products',
   (req, res) => {
     Product.find()
     .then(listProducts => {
-      res.render('admin/products', {listProducts});
+      res.render('admin/products', {listProducts, user: req.user});
     })
 });
 
@@ -56,7 +57,7 @@ adminRouter.get('/editproduct/:idProduct',
     .then(async (productInfo) => {
       const prodL = await ProductLines.findById(productInfo.productLines);
       console.log(prodL);
-      res.render('admin/editproduct', {productInfo, prodLName: prodL.name});
+      res.render('admin/editproduct', {productInfo, prodLName: prodL.name, user: req.user});
     })
     .catch(err => console.log(err));
 });
@@ -111,7 +112,7 @@ adminRouter.get('/addproduct',
   isLoggedIn, 
   rolesAuthorized(['admin', 'staff']), 
   (req, res) => {
-    res.render("admin/addproduct");
+    res.render("admin/addproduct", { user: req.user });
 });
 
 adminRouter.post('/addproduct',
@@ -147,11 +148,11 @@ adminRouter.post('/addproduct',
 
 adminRouter.get('/showuser',
   isLoggedIn, 
-  rolesAuthorized(['admin', 'staff']), 
+  rolesAuthorized(['admin']), 
   (req, res) => {
     User.find({roles: 'user'})
     .then(listUser => {
-      res.render("admin/user", {listUser});
+      res.render("admin/user", {listUser, user: req.user, msg: req.flash('msg'), error: req.flash('error')});
     })
     .catch(err => console.log(err));
 });
@@ -160,15 +161,15 @@ adminRouter.get('/orders',
   isLoggedIn,
   rolesAuthorized(['admin', 'staff']),
   (req, res) => {
-    res.render("admin/orders");
+    res.render("admin/orders", { user: req.user });
   }
 )
 
 adminRouter.get('/editorder', 
   isLoggedIn,
-  rolesAuthorized(['admin', 'staff']),
+  rolesAuthorized(['admin']),
   (req, res) => {
-    res.render("admin/order-detail");
+    res.render("admin/order-detail", {user: req.user});
   }
 )
 
@@ -176,7 +177,20 @@ adminRouter.get('/manageCategories',
   isLoggedIn,
   rolesAuthorized(['admin', 'staff']),
   (req, res) => {
-    res.render('admin/manageCategories')
+    res.render('admin/manageCategories', {user: req.user})
+  }
+)
+
+adminRouter.get('/deleteuser/:id', 
+  isLoggedIn,
+  rolesAuthorized(['admin']),
+  (req, res) => {
+    const id = req.params.id;
+    User.findByIdAndRemove(id)
+    .then(user => {
+      req.flash('msg', `Deleted succesfully user: ${user.name} - id: ${user._id} has been deleted!`);
+      res.redirect('/admin/showuser');
+    })
   }
 )
 

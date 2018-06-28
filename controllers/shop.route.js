@@ -2,12 +2,38 @@ const express = require('express');
 const shopRouter = express.Router();
 const Product = require('../model/Product');
 const ProductLines = require('../model/ProductLines');
-const {rolesAuthorized, isLoggedIn} = require('../lib/auth.middleware');
-
+const {rolesAuthorized, isUserLoggedIn, isActiveAccount} = require('../lib/auth.middleware');
+const Cart = require('../model/Cart');
 /* GET shop page. */
 shopRouter.get('/', (req, res) => {
     res.redirect('/shop/tshirt/1');    
 });
+
+shopRouter.get('/cart', (req, res) => {
+    let emptyCart = new Cart({});
+    res.render('page/cart', {isLogin: req.isAuthenticated(), cart: req.session.cart ? req.session.cart : emptyCart, user: req.user });
+});
+
+shopRouter.get('/add-to-cart/:id', (req, res) => {
+    const productId = req.params.id;
+    let cart = new Cart(req.session.cart ? req.session.cart.items : {});
+    
+    Product.findById(productId)
+    .then(product => {
+        cart.add(product, product._id);
+        req.session.cart = cart;
+        console.log(req.session.cart);
+        res.redirect('/');
+    }) 
+});
+
+shopRouter.get('/cart-delete-item/:id', (req, res) => {
+    const id = req.params.id;
+    req.session.cart.totalQty = req.session.cart.totalQty - req.session.cart.items[id].qty;
+    req.session.cart.totalPrice = req.session.cart.totalPrice - req.session.cart.items[id].price;
+    delete req.session.cart.items[id];
+    res.redirect('/shop/cart');
+})
 
 shopRouter.get('/product/:id', (req, res) => {
     Product.findById(req.params.id)
@@ -16,9 +42,17 @@ shopRouter.get('/product/:id', (req, res) => {
     })
 });
 
-shopRouter.get('/cart', (req, res) => {
-    console.log(req.isAuthenticated());
-    res.render('page/cart' , { isLogin: req.isAuthenticated()});
+shopRouter.post('/cart',
+    isUserLoggedIn,
+    isActiveAccount,
+    (req, res) => {
+        console.log(req.isAuthenticated());
+        res.render('page/cart' , { isLogin: req.isAuthenticated()});
+});
+
+shopRouter.get('/checkout', (req, res) => {
+    console.log("cardsadsadsadsadsat");
+    res.render('page/checkout');
 });
 
 shopRouter.get('/:productline', (req, res) => {
@@ -30,7 +64,6 @@ shopRouter.get('/:productline/:page', (req, res) => {
     const perPage = 9;
     const page = req.params.page || 1;
     const productline = req.params.productline;
-
     ProductLines.find({ name: productline })
     .then(productLine => {
         return Product.find({ productLines: productLine[0]._id })
@@ -38,6 +71,7 @@ shopRouter.get('/:productline/:page', (req, res) => {
         .skip((perPage * page) - perPage)
     })
     .then(products => {
+        console.log(products);
         if(products.length === 0) return res.render('page/shop', {
             products,
             current: page,
@@ -59,5 +93,6 @@ shopRouter.get('/:productline/:page', (req, res) => {
         })
     })
 });
+
 
 module.exports = shopRouter;

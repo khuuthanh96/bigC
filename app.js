@@ -50,6 +50,19 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    createCategory()
+    .then(_ => {
+        ProductLines.find()
+        .then(list => {
+            let listName = [];
+            res.locals.category = listName.concat(list);
+        })
+    })
+
+    next();
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
