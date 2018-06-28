@@ -19,7 +19,7 @@
 	</header>
 	<!--/header-->
 
-	<section id="cart_items">
+	<section class="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
@@ -93,18 +93,18 @@
 							<span><%= cart.totalQty %></span>
 						</li>
 						<li>Cart Sub Total
-							<span><%= cart.totalPrice %></span>
+							<span><%= cart.totalPrice %>đ</span>
 						</li>
 						<li>Eco Tax
-							<span>$0</span>
+							<span>0đ</span>
 						</li>
 						
 						<li>Total
 							<span><%= cart.totalPrice %></span>
 						</li>
 					</ul>
-
-					<button class="btn btn-default check_out" type="submit">Check Out</button>
+					<button type="submit" class="btn btn-w-m btn-warning">Check Out</button>
+					
 				</div>
 			</div>
 		</form>

@@ -54,3 +54,13 @@ header{
     background-color: white;
     padding: 30px 30px;
 }
+
+.cart_items{
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.es-content{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}

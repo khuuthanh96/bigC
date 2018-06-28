@@ -43,19 +43,20 @@
                                 <div class="form-group clearfix">
                                     <label class="control-label">Old password</label>
                                     <div>
-                                        <input type="password" class="form-control" name="oldPass">
+                                        <input type="password" class="form-control" name="oldPass" required>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <label class="control-label">New password</label>
                                     <div>
-                                        <input type="password" class="form-control" name="newPass">
+                                        <input type="password" class="form-control" name="newPass"required id="password">
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <label class="control-label">Re-password</label>
                                     <div>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" onchange="check()" id="rePassword" required>
+                                        <div><span id="errorRePass" class="error"></span></div>
                                     </div>
                                 </div>
                             </div>
@@ -89,6 +90,21 @@
     </footer>
 
     <% include ../partials/js %>
+    <script>
+    function check() {
+			var pass = document.getElementById("password").value;			
+			var rePass = document.getElementById("rePassword").value;
+			if (pass!=rePass){
+				document.getElementById("errorRePass").innerHTML="Passwords do not match please re-enter!";
+				document.getElementById("rePassword").value = "";
+				
+			}
+			else if (pass===rePass){
+				document.getElementById("errorRePass").innerHTML="";
+			}
+			
+		}
+        </script>
 </body>
 
 </html>
