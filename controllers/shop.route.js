@@ -3,22 +3,37 @@ const shopRouter = express.Router();
 const Product = require('../model/Product');
 const ProductLines = require('../model/ProductLines');
 const {rolesAuthorized, isLoggedIn} = require('../lib/auth.middleware');
-
+const Cart = require('../model/Cart');
 /* GET shop page. */
 shopRouter.get('/', (req, res) => {
     res.redirect('/shop/tshirt/1');    
 });
 
+shopRouter.get('/cart', (req, res) => {
+    res.render('page/cart', { cart: req.session.cart });
+});
+
+shopRouter.get('/add-to-cart/:id', (req, res) => {
+    const productId = req.params.id;
+    console.log(req.session.cart)
+    let cart = new Cart(req.session.cart ? req.session.cart.items : {});
+    
+    Product.findById(productId)
+    .then(product => {
+        cart.add(product, product._id);
+        req.session.cart = cart;
+        res.redirect('/');
+    }) 
+});
+
 shopRouter.get('/product/:id', (req, res) => {
+    console.log(req.session.cart)
     Product.findById(req.params.id)
     .then(product => {
         res.render('page/productDetails', { product, isLogin: req.isAuthenticated(), user: req.user });
     })
 });
 
-shopRouter.get('/cart', (req, res) => {
-    res.render('page/cart');
-});
 
 shopRouter.get('/:productline', (req, res) => {
     const productline = req.params.productline;
@@ -29,7 +44,6 @@ shopRouter.get('/:productline/:page', (req, res) => {
     const perPage = 9;
     const page = req.params.page || 1;
     const productline = req.params.productline;
-
     ProductLines.find({ name: productline })
     .then(productLine => {
         return Product.find({ productLines: productLine[0]._id })
@@ -58,5 +72,6 @@ shopRouter.get('/:productline/:page', (req, res) => {
         })
     })
 });
+
 
 module.exports = shopRouter;

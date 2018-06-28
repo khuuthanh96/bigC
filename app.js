@@ -17,14 +17,14 @@ require('./lib/initAdminAccount'); // create admin account for managed
 
 const app = express();
 
-createCategory()
-.then(_ => {
-    ProductLines.find()
-    .then(list => {
-        let listName = [];
-        app.locals.category = listName.concat(list);
-    })
-})
+// createCategory()
+// .then(_ => {
+//     ProductLines.find()
+//     .then(list => {
+//         let listName = [];
+//         app.locals.category = listName.concat(list);
+//     })
+// })
 
 const indexRouter = require('./controllers/index.routes');
 const adminRouter = require('./controllers/admin.route');
@@ -50,6 +50,21 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    console.log("here");
+    createCategory()
+    .then(_ => {
+        ProductLines.find()
+        .then(list => {
+            let listName = [];
+            res.locals.category = listName.concat(list);
+            console.log(res.locals.category);
+        })
+    })
+
+    next();
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

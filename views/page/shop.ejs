@@ -30,7 +30,7 @@
 										<img src=" /images/shop/<%=e.images[0] %>" alt="" />
 										<h2><%= e.price %>₫</h2>
 										<p><%= e.name %></p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="/shop/add-to-cart/<%= e._id %>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										<a href="/shop/product/<%= e._id %>" class="btn btn-default add-to-cart"></i>View</a>										
 									</div>
 								</div>

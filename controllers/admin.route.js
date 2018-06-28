@@ -34,6 +34,7 @@ adminRouter.get('/logout',
   (req, res) => {
     req.logOut();
     req.destroy();
+    console.log(res.locals.category);
     res.redirect('/admin/login');
 })
 
