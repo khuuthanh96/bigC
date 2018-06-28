@@ -42,7 +42,6 @@
                     </div>
                     <div class="col-sm-5 m-b-xs">
                     </div>
-                    
                     <div class="col-sm-2">
                       <a  class="btn btn-success manage" type="button" data-toggle="modal" data-target="#edituser" >
                         <i class="fa fa-user"></i>&nbsp;&nbsp;
@@ -70,9 +69,6 @@
                       <tbody>
                         <% listUser.forEach( u => { %>
                           <tr>
-                            <!--<td class="text-center"><img name="image"
-                                                   src=""
-                                                   width="50"></td>-->
                             <td class="text-center">
                               <%= u.email %>
                             </td>
@@ -96,7 +92,7 @@
                             </td>
                             <td class="text-right">
                                 <div class="btn-group">
-                                    <a class="btn-success btn btn-xs" type="button" data-toggle="modal" data-target="#edituser"> Edit </a>
+                                    <a class="btn-success btn btn-xs" type="button" data-toggle="modal" data-target="#edituser" id="clickedit"> Edit </a>
                                     <a class="btn-danger btn btn-xs" href="/admin/deleteuser/<%=u._id%>">Delete</a>
                                 </div>
                             </td>
@@ -114,7 +110,7 @@
                 <div class="modal inmodal" id="edituser" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content animated fadeIn">
-                      <form action="/admin/edituser">
+                      <form action="/admin/adduser" method="POST">
                         <div class="modal-body">
                           <div class="panel-body">
 
@@ -126,9 +122,21 @@
                                 </div>
                               </div>
                               <div class="form-group">
+                                  <label class="col-sm-2 control-label">Password:</label>
+                                  <div class="col-sm-10">
+                                    <input type="password" name="password" class="form-control">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">Re-password:</label>
+                                  <div class="col-sm-10">
+                                    <input type="password" name="rePassword" class="form-control">
+                                  </div>
+                              </div>
+                              <div class="form-group">
                                 <label class="col-sm-2 control-label">Email:</label>
                                 <div class="col-sm-10">
-                                  <input type="email" name="name" class="form-control">
+                                  <input type="email" name="email" class="form-control">
                                 </div>
                               </div>
                               <div class="form-group">
@@ -140,31 +148,41 @@
                               <div class="form-group">
                                 <label class="col-sm-2 control-label">Phone:</label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="name" class="form-control">
+                                  <input type="text" name="phone" class="form-control">
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-2 control-label">Gender:</label>
                                 <div class="col-sm-10">
-                                  <select class="form-control" name="productLines">
-                                    <option>Male</option>
-                                    <option>FeMale</option>
+                                  <select class="form-control" name="sex">
+                                    <option>male</option>
+                                    <option>female</option>
                                   </select>
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-2 control-label">Address:</label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="name" class="form-control">
+                                  <input type="text" name="address" class="form-control">
                                 </div>
                               </div>
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">Roles:</label>
+                                  <div class="col-sm-10">
+                                    <select class="form-control" name="role">
+                                      <option>Staff</option>
+                                      <option>User</option>
+                                    </select>
+                                  </div>
+                                </div>
                             </fieldset>
 
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                       </form>
                     </div>
@@ -185,8 +203,45 @@
     <script src="/javascripts/inspinia.js"></script>
     <script src="/javascripts/plugins/pace/pace.min.js"></script>
 
-    <script>
-
+    <script type="text/javascript">
+      $(function(){				
+        $('#clickedit').click(function(e){
+                    e.preventDefault();
+                    console.log('select_link clicked');
+                    
+                     /*$.ajax({
+                        dataType: 'jsonp',
+                        data: "data=yeah",						
+                        jsonp: 'callback',
+                        url: 'http://localhost:3000/endpoint?callback=?',						
+                        success: function(data) {
+                            console.log('success');
+                            console.log(JSON.stringify(data));
+                        }
+                    });*/
+					var data = {};
+					data.title = "title";
+					data.message = "message";
+					
+					$.ajax({
+						type: 'POST',
+						data: JSON.stringify(data),
+				        contentType: 'application/json',
+                        url: 'http://localhost:3000/endpoint',						
+                        success: function(data) {
+                            console.log('success');
+                            console.log(JSON.stringify(data));
+                        }
+                    });
+					/*$.ajax('http://localhost:3000/endpoint', {
+					        type: 'POST',
+					        data: JSON.stringify(data),
+					        contentType: 'application/json',
+					        success: function() { console.log('success');},
+					        error  : function() { console.log('error');}
+					});*/
+                });				
+            });
     </script>
 </body>
 

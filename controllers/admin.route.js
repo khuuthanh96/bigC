@@ -10,7 +10,6 @@ const Order = require('../model/Order');
 
 const passport = require('passport');
 const uploadConfig = require('../lib/uploadImageConfig');
-
 const uploadImage = uploadConfig.single('image')
 
 /* GET users listing. */
@@ -19,6 +18,7 @@ adminRouter.get('/', (req, res) => {
 });
 
 adminRouter.get('/login', (req, res, next) => {
+  if(req.isAuthenticated()) return res.redirect('/admin/products')
   res.render('admin/login', {user: req.user, error: req.flash('error')});
 });
 
@@ -34,7 +34,6 @@ adminRouter.get('/logout',
   (req, res) => {
     req.logOut();
     req.destroy();
-    console.log(res.locals.category);
     res.redirect('/admin/login');
 })
 
@@ -150,7 +149,7 @@ adminRouter.get('/showuser',
   isLoggedIn, 
   rolesAuthorized(['admin']), 
   (req, res) => {
-    User.find({roles: 'user'})
+    User.find({roles: 'staff' && 'user' })
     .then(listUser => {
       res.render("admin/user", {listUser, user: req.user, msg: req.flash('msg'), error: req.flash('error')});
     })
@@ -189,6 +188,45 @@ adminRouter.get('/deleteuser/:id',
     User.findByIdAndRemove(id)
     .then(user => {
       req.flash('msg', `Deleted succesfully user: ${user.name} - id: ${user._id} has been deleted!`);
+      res.redirect('/admin/showuser');
+    })
+  }
+)
+
+adminRouter.post('/adduser', 
+  isLoggedIn,
+  rolesAuthorized(['admin']),
+  (req, res) => {
+    const {email, name, phone, sex, birthday, password,rePassword, address, role} = req.body;
+
+    if(password !== rePassword){
+      req.flash('error', 'Password and re-password is not the same');
+      res.redirect('/admin/showuser');
+    }
+    User.findOne({email}) 
+    .then(userExisting => {
+        if(userExisting) {
+            req.flash('error', 'Email in use!!!');
+            res.redirect('/admin/showuser');
+        };
+        
+        return User.signUp(email, password,name,address,phone,sex,birthday);
+    })
+    .then(async (user) => {
+        if(!user) {
+          req.flash('error', 'Email in use');
+          res.redirect('/admin/showuser');
+        } 
+        if(role === 'Staff') {
+          await User.setRoles(user._id, 'staff');
+        }
+        User.setActive(user._id)
+        .then(_ => {
+          res.redirect('/admin/showuser')
+        });
+    })
+    .catch(err => {
+      req.flash('error', "phone is longer than the maximum allowed length (12)"),
       res.redirect('/admin/showuser');
     })
   }
