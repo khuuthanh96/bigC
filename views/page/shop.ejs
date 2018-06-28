@@ -50,7 +50,7 @@
 							<% if (current == 1) {%>
 								<li class="disabled"><a>First</a></li>
 							<% } else { %>
-								<li><a href="../shop/<%= productlines %>/1">First</a></li>
+								<li><a href="/shop/<%= productlines %>/1">First</a></li>
 							<% } %>
 							
 							<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
@@ -71,7 +71,7 @@
 							<% if (current == pages) { %>
 								<li class="disabled"><a>Last</a></li>
 							<% } else { %>
-								<li><a href="/shop/<%= productlines %>/<%= pages %>"><</a></li>
+								<li><a href="/shop/<%= productlines %>/<%= pages %>"></a></li>
 							<% } %>
 						</ul>
 						<% } %>

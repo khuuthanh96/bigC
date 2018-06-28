@@ -14,8 +14,8 @@ const uploadConfig = require('../lib/uploadImageConfig');
 const uploadImage = uploadConfig.single('image')
 
 /* GET users listing. */
-adminRouter.get('/', function(req, res, next) {
-  res.redirect('/admin/login', {user: req.user, error: req.flash('error')});
+adminRouter.get('/', (req, res) => {
+  res.redirect('/admin/login');
 });
 
 adminRouter.get('/login', (req, res, next) => {

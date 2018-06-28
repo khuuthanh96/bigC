@@ -17,14 +17,14 @@ require('./lib/initAdminAccount'); // create admin account for managed
 
 const app = express();
 
-// createCategory()
-// .then(_ => {
-//     ProductLines.find()
-//     .then(list => {
-//         let listName = [];
-//         app.locals.category = listName.concat(list);
-//     })
-// })
+createCategory()
+.then(_ => {
+    ProductLines.find()
+    .then(list => {
+        let listName = [];
+        app.locals.category = listName.concat(list);
+    })
+})
 
 const indexRouter = require('./controllers/index.routes');
 const adminRouter = require('./controllers/admin.route');
