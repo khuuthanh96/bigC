@@ -52,14 +52,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
     res.locals.session = req.session;
-    console.log("here");
     createCategory()
     .then(_ => {
         ProductLines.find()
         .then(list => {
             let listName = [];
             res.locals.category = listName.concat(list);
-            console.log(res.locals.category);
         })
     })
 

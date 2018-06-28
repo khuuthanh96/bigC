@@ -10,12 +10,11 @@ shopRouter.get('/', (req, res) => {
 });
 
 shopRouter.get('/cart', (req, res) => {
-    res.render('page/cart', { cart: req.session.cart });
+    res.render('page/cart', {isLogin: req.isAuthenticated(), cart: req.session.cart, user: req.user });
 });
 
 shopRouter.get('/add-to-cart/:id', (req, res) => {
     const productId = req.params.id;
-    console.log(req.session.cart)
     let cart = new Cart(req.session.cart ? req.session.cart.items : {});
     
     Product.findById(productId)
@@ -27,7 +26,6 @@ shopRouter.get('/add-to-cart/:id', (req, res) => {
 });
 
 shopRouter.get('/product/:id', (req, res) => {
-    console.log(req.session.cart)
     Product.findById(req.params.id)
     .then(product => {
         res.render('page/productDetails', { product, isLogin: req.isAuthenticated(), user: req.user });
