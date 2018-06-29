@@ -3,14 +3,14 @@
 
 <head>
     <% include ../partials/head %>
-    <link href="/assets/css/style.css" rel="stylesheet">
+        <link href="/assets/css/style.css" rel="stylesheet">
 
 </head>
 
 
 <body>
     <header>
-        
+
     </header>
     <!--/header-->
 
@@ -25,43 +25,51 @@
                 </ol>
             </div>
             <div class="col-md-6">
-                <div class="delivery-method order-box">
-                    <div class="delivery-method__title">
-                        <h2 class="text-uppercase">
-                            delivery method
-                        </h2>
-                    </div>
-                    <div class="delivery-method__content">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>
-                                    <strong>Standard</strong>
-                                </p>
-                                <p>3-4 days</p>
-                                <p>30.000đ</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p>
-                                    <strong>Standard</strong>
-                                </p>
-                                <p>2-3 days</p>
-                                <p>40.000đ</p>
+               
+                    <div class="delivery-method order-box">
+                        <div class="delivery-method__title">
+                            <h2 class="text-uppercase">
+                                delivery method
+                            </h2>
+                        </div>
+                        <div class="delivery-method__content">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> <strong>Standard</strong> 2-3 days (40.000đ)</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> <strong>Fast</strong> 2-3 days (40.000đ)</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+               
+
                 <div class="payment-method order-box">
                     <div class="payment-method__title">
                         <h2 class="text-uppercase">payment-method</h2>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <p>Cash on delivery</p>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> <strong>Cash on delivery</strong></label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> <strong>Stranfer</strong></label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <p>Stranfer</p>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-md-6 oder-sumary order-box">
@@ -102,7 +110,7 @@
                         <div class="col-xs-6">Shipping fee</div>
                         <div class="col-xs-6">30.000đ</div>
                     </div>
-                    
+
                     <button data-toggle="button" class="btn btn-primary" type="submit">Submit</button>
                 </form>
             </div>
