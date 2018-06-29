@@ -47,6 +47,13 @@ a:hover li {
     padding-bottom: 100%;
 }
 
+.home-cate__bg2{
+    display: block;
+    background: no-repeat center;
+    background-size: cover;
+    padding-bottom: 50%;
+}
+
 .home-content{
     padding-left: 200px;
 }
