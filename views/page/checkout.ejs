@@ -10,20 +10,15 @@
 
 <body>
     <header>
+		<% include ../partials/header %>
 
     </header>
     <!--/header-->
 
     <section class="checkout">
+    <form action="/shop/checkout" method="POST">
+
         <div class="container">
-            <div class="breadcrumbs">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="active">Shopping Cart</li>
-                </ol>
-            </div>
             <div class="col-md-6">
                
                     <div class="delivery-method order-box">
@@ -37,13 +32,13 @@
                                 <div class="col-sm-6">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> <strong>Standard</strong> 2-3 days (40.000đ)</label>
+                                            <input type="radio" name="delivery" id="standard" value="standard" checked> <strong>Standard</strong> 2-3 days (40.000đ)</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> <strong>Fast</strong> 2-3 days (40.000đ)</label>
+                                            <input type="radio" name="delivery" id="fast" value="fast"> <strong>Fast</strong> 1-2 days (20.000đ)</label>
                                     </div>
                                 </div>
                             </div>
@@ -59,13 +54,13 @@
                             <div class="col-sm-6">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> <strong>Cash on delivery</strong></label>
+                                        <input type="radio" name="payment" id="optionsRadios1" value="cod" checked> <strong>Cash on delivery</strong></label>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> <strong>Stranfer</strong></label>
+                                        <input type="radio" name="payment" id="optionsRadios2" value="stranfer"> <strong>Stranfer</strong></label>
                                 </div>
                             </div>
                         </div>
@@ -74,47 +69,40 @@
             </div>
             <div class="col-md-6 oder-sumary order-box">
 
-                <form action="" method="">
                     <div class="order-sumary__title">
                         <h2 class="text-uppercase">Shipping & billing</h2>
                     </div>
-                    <!--
-                    <p>Ship to</p>
-                    <div class="oder-customer-info">
-                        <p class="order-customer-info__name"><strong>Trần Lê Phương Thảo</strong></p>
-                        <p class="order-customer-info__address"></p>
-                    </div>-->
-
                     <div class="form-group">
                         <label for="">Name*</label>
-                        <input class="form-control" type="text" placeholder="Name" name="name" required>
+                        <input class="form-control" type="text" placeholder="Name" name="name" required value="<%= user.name%>">
                     </div>
                     <div class="form-group">
                         <label for="">Address*</label>
-                        <input class="form-control" type="text" placeholder="Address" name="address" required>
+                        <input class="form-control" type="text" placeholder="Address" name="address" required value="<%= user.address %>">
                     </div>
                     <div class="form-group">
                         <label for="">Phone*</label>
-                        <input class="form-control" type="number" placeholder="Phone Number" name="phone" required>
+                        <input class="form-control" type="number" placeholder="Phone Number" name="phone" required value="<%= user.phone %>">
                     </div>
                     <div class="order-sumary__title">
                         <h2 class="text-uppercase">Sumary order</h2>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">Subtotal
-                            <span>(2 items)</span>
+                            <span>(<%= cart.totalQty %> items)</span>
                         </div>
-                        <div class="col-xs-6">500.000đ</div>
+                        <div class="col-xs-6"><%= cart.totalPrice %></div>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">Shipping fee</div>
                         <div class="col-xs-6">30.000đ</div>
                     </div>
 
-                    <button data-toggle="button" class="btn btn-primary" type="submit">Submit</button>
-                </form>
+                    <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </div>
+    </form>
+
     </section>
     <!--/#cart_items-->
 
