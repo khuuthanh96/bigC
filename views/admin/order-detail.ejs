@@ -42,19 +42,19 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Name: Phuong Thao</td>
+                                                    <td>Name: <%= customer.name %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Email: phuongthao@gmail.com</td>
+                                                    <td>Email: <%= customer.email %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Address: TPHCM </td>
+                                                    <td>Address: <%= customer.address %> </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Phone: 0123456</td>
+                                                    <td>Phone: <%= customer.phone %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Birthday: 01/11/1997</td>
+                                                    <td>Birthday: <%= customer.dayOfBirth %></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -77,20 +77,26 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Delivery method: Thanh toán tại nhà</td>
+                                                    <td>Delivery method: <%= ord.delivery %></td>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Payment method: Thanh toán tại nhà</td>
+                                                    <td>Payment method: <%= ord.payment %></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Required Date: <%= ord.requiredDate %></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Shipped Date: <%= ord.shippedDate %></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Status: pending</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Address: TPHCM</td>
+                                                    <td>Address: <%= ord.address %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Phone: 0123456</td>
+                                                    <td>Phone: <%= ord.phone %></td>
                                                 </tr>
 
                                             </tbody>
@@ -109,61 +115,40 @@
                                             <thead>
                                                 <tr>
                                                     <th>Item List</th>
-                                                    <th>Description</th>
+                                                    <th>Name</th>
                                                     <th>Quantity</th>
-                                                    <th>Unit Price</th>
+                            
 
-                                                    <th>Total Price</th>
+                                                    <th>Price</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="images/cart/one.png" alt="" class="img-lg">
-                                                    </td>
-                                                    <td>product 1</td>
-                                                    <td>1</td>
-                                                    <td>$26.00</td>
-
-                                                    <td>$31,98</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="images/cart/one.png" alt="" class="img-lg">  
-                                                    </td>
-                                                    <td>product 1</td>
-                                                    <td>1</td>
-                                                    <td>$26.00</td>
-
-                                                    <td>$31,98</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="images/cart/one.png" alt="" class="img-lg"> 
-                                                    </td>
-                                                    <td>product 1</td>
-                                                    <td>1</td>
-                                                    <td>$26.00</td>
-
-                                                    <td>$31,98</td>
-                                                </tr>
-
-                                            </tbody>
+                                           
+                                                    <tbody>
+                                                            <tr>
+                                                           
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                
+            
+                                                        </tbody>
+                                         
                                         </table>
                                     </div>
                                     <table class="table invoice-total">
                                             <tbody>
                                             <tr>
                                                 <td><strong>Sub Total :</strong></td>
-                                                <td>$1026.00</td>
+                                                <td><%= ord.totalPrice %></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>TAX :</strong></td>
-                                                <td>$235.98</td>
+                                                <td>0 d</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>TOTAL :</strong></td>
-                                                <td>$1261.98</td>
+                                                <td><%= ord.totalPrice %></td>
                                             </tr>
                                             </tbody>
                                         </table>
