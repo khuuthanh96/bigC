@@ -1,7 +1,7 @@
 const express = require('express');
 const shopRouter = express.Router();
 const Product = require('../model/Product');
-const _ = require('../model/Order');
+const Order = require('../model/Order');
 const ProductLines = require('../model/ProductLines');
 const {rolesAuthorized, isUserLoggedIn, isActiveAccount} = require('../lib/auth.middleware');
 const Cart = require('../model/Cart');
@@ -23,7 +23,6 @@ shopRouter.get('/add-to-cart/:id', (req, res) => {
     .then(product => {
         cart.add(product, product._id);
         req.session.cart = cart;
-        console.log(req.session.cart);
         res.redirect('/');
     }) 
 });
@@ -51,7 +50,6 @@ shopRouter.get('/add-in-cart/:id', (req, res) => {
     .then(product => {
         cart.add(product, product._id);
         req.session.cart = cart;
-        console.log(req.session.cart);
         res.redirect('/shop/cart');
     }) 
 })
@@ -68,15 +66,11 @@ shopRouter.get('/delete-in-cart/:id', (req, res) => {
     res.redirect('/shop/cart');
 })
 
-shopRouter.post('/cart',
+shopRouter.get('/checkout', 
     isUserLoggedIn,
     isActiveAccount,
     (req, res) => {
-        console.log(req.isAuthenticated());
-        res.render('page/cart' , { isLogin: req.isAuthenticated()});
-});
-
-shopRouter.get('/checkout', (req, res) => {
+ 
     res.render('page/checkout', {
         isLogin: req.isAuthenticated(),
         user: req.user,
@@ -84,12 +78,51 @@ shopRouter.get('/checkout', (req, res) => {
     });
 });
 
-shopRouter.post('/checkout', (req, res) => {
+shopRouter.post('/checkout',
+    isUserLoggedIn,
+    isActiveAccount,
+    (req, res) => {
     const { delivery, payment, name, address, phone } = req.body;
+    let itemsOrdered = [{}];
+    for(let i in req.session.cart.items) {
+        let objItem = {
+            produtcts: i,
+            qty: req.session.cart.items[i].qty
+        }
+        itemsOrdered.push(objItem);
+    }
+    let now = new Date();
+    let fee;
+    shippedDate = new Date();
+    if(delivery === 'fast') {
+        shippedDate.setDate(shippedDate.getDate() + 2);
+        fee = 40000;
+    }else {
+        shippedDate.setDate(shippedDate.getDate() + 4);
+        fee = 20000;
+    }
+    
 
-
-
-    res.send(req.body)
+    Order.createOrder(
+        itemsOrdered,
+        req.session.cart.totalQty,
+        req.session.cart.totalPrice,
+        req.user._id,
+        delivery,
+        payment,
+        name,
+        address,
+        phone,
+        fee,
+        shippedDate
+    ).then( order => {
+        req.flash('msg', `Order successfully: Your order ID: ${order._id}`);
+        res.redirect('/shop');
+    })
+    .catch(err => {
+        req.flash('error', 'Order failure!')
+        res.redirect('/shop');
+    })
 })
 
 shopRouter.get('/:productline', (req, res) => {
@@ -108,14 +141,15 @@ shopRouter.get('/:productline/:page', (req, res) => {
         .skip((perPage * page) - perPage)
     })
     .then(products => {
-        console.log(products);
         if(products.length === 0) return res.render('page/shop', {
             products,
             current: page,
             pages: Math.ceil(1 / perPage),
             productlines: productline,
             isLogin: req.isAuthenticated(),
-            user: req.user
+            user: req.user,
+            msg: req.flash('msg'),
+            error: req.flash('error')
         })
         Product.count({ productLines: products[0].productLines })
         .then(length => {
@@ -125,7 +159,9 @@ shopRouter.get('/:productline/:page', (req, res) => {
                 pages: Math.ceil(length / perPage),
                 productlines: productline,
                 isLogin: req.isAuthenticated(),
-                user: req.user
+                user: req.user,
+                msg: req.flash('msg'),
+                error: req.flash('error')
             })
         })
     })

@@ -55,7 +55,6 @@ adminRouter.get('/editproduct/:idProduct',
     Product.findById(idProduct)
     .then(async (productInfo) => {
       const prodL = await ProductLines.findById(productInfo.productLines);
-      console.log(prodL);
       res.render('admin/editproduct', {productInfo, prodLName: prodL.name, user: req.user});
     })
     .catch(err => console.log(err));
@@ -91,6 +90,19 @@ adminRouter.post('/editproduct/:idProduct',
       .catch(err => console.log(err));
     })
 });
+
+adminRouter.get('/delorder/:id', 
+  isLoggedIn,
+  rolesAuthorized(['admin', 'staff']),
+  (req, res)=> {
+    const id = req.params.id;
+    Order.findByIdAndRemove(id)
+    .then(ord => {
+      req.flash('msg', `deleted order with ID: ${ord._id} Successfully!`);
+      res.redirect('/admin/orders');
+    })
+  }
+)
 
 adminRouter.get('/deleteproduct/:idProduct',
   isLoggedIn, 
@@ -165,15 +177,27 @@ adminRouter.get('/orders',
   isLoggedIn,
   rolesAuthorized(['admin', 'staff']),
   (req, res) => {
-    res.render("admin/orders", { user: req.user });
+    Order.find()
+    .then(orders => {
+      res.render("admin/orders", { user: req.user, orders, msg: req.flash('msg') });
+    })
   }
 )
 
-adminRouter.get('/editorder', 
+adminRouter.get('/editorder/:id', 
   isLoggedIn,
   rolesAuthorized(['admin']),
   (req, res) => {
-    res.render("admin/order-detail", {user: req.user});
+    const id = req.params.id;
+    Order.findById(id)
+    .then(async (ord) => {
+      if(!ord) res.redirect('/admin/orders');
+      const customer = await User.findById(ord.customerId);
+      if(!customer) res.redirect('/admin/orders');
+
+      res.render("admin/order-detail", {user: req.user, ord: ord, customer});
+    })
+ 
   }
 )
 

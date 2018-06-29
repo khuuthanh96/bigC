@@ -23,7 +23,6 @@ userRouter.post('/login', passport.authenticate('local', {
 userRouter.get('/logout',
     isUserLoggedIn,
     (req, res) => {
-        console.log(req.isAuthenticated());
         req.logOut();
         req.destroy();
         res.redirect('/shop')
@@ -48,9 +47,7 @@ userRouter.post('/reset-password',(req,res) => {
     
     User.changePassword(req.user._id, newPass)
             .then(user => { 
-                console.log(user);
                 req.flash('msg', 'Successfully!');
-                console.log('hello kiki');
                 return res.redirect('/user/login')
             })
 }
@@ -132,9 +129,7 @@ userRouter.post('/password',
 
             User.changePassword(req.user._id, newPass)
             .then(user => { 
-                console.log(user);
                 req.flash('msg', 'Successfully!');
-                console.log('hello kiki');
                 return res.redirect('/user/password')
             })
         })
