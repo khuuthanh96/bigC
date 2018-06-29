@@ -1,6 +1,7 @@
 const express = require('express');
 const shopRouter = express.Router();
 const Product = require('../model/Product');
+const Order = require('../model/Order');
 const ProductLines = require('../model/ProductLines');
 const {rolesAuthorized, isUserLoggedIn, isActiveAccount} = require('../lib/auth.middleware');
 const Cart = require('../model/Cart');
@@ -67,13 +68,29 @@ shopRouter.get('/delete-in-cart/:id', (req, res) => {
     res.redirect('/shop/cart');
 })
 
+shopRouter.post('/cart',
+    isUserLoggedIn,
+    isActiveAccount,
+    (req, res) => {
+        console.log(req.isAuthenticated());
+        res.render('page/cart' , { isLogin: req.isAuthenticated()});
+});
+
 shopRouter.get('/checkout', (req, res) => {
-    res.render('page/checkout', { 
-        cart: req.session.cart ,
+    res.render('page/checkout', {
         isLogin: req.isAuthenticated(),
         user: req.user,
+        cart: req.session.cart
     });
 });
+
+shopRouter.post('/checkout', (req, res) => {
+    const { delivery, payment, name, address, phone } = req.body;
+
+    Order.cr
+
+    res.send(req.body)
+})
 
 shopRouter.get('/:productline', (req, res) => {
     const productline = req.params.productline;

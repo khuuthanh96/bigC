@@ -149,8 +149,13 @@ adminRouter.get('/showuser',
   isLoggedIn, 
   rolesAuthorized(['admin']), 
   (req, res) => {
-    User.find({roles: 'staff' && 'user' })
+    User.find()
     .then(listUser => {
+      for (let i = 0; i < listUser.length; i++) {
+        if(listUser[i].roles === "admin") {
+          listUser.splice(i, 1);
+        } 
+      }
       res.render("admin/user", {listUser, user: req.user, msg: req.flash('msg'), error: req.flash('error')});
     })
     .catch(err => console.log(err));
