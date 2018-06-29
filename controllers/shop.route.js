@@ -1,6 +1,7 @@
 const express = require('express');
 const shopRouter = express.Router();
 const Product = require('../model/Product');
+const Order = require('../model/Order');
 const ProductLines = require('../model/ProductLines');
 const {rolesAuthorized, isUserLoggedIn, isActiveAccount} = require('../lib/auth.middleware');
 const Cart = require('../model/Cart');
@@ -76,9 +77,20 @@ shopRouter.post('/cart',
 });
 
 shopRouter.get('/checkout', (req, res) => {
-    console.log("cardsadsadsadsadsat");
-    res.render('page/checkout');
+    res.render('page/checkout', {
+        isLogin: req.isAuthenticated(),
+        user: req.user,
+        cart: req.session.cart
+    });
 });
+
+shopRouter.post('/checkout', (req, res) => {
+    const { delivery, payment, name, address, phone } = req.body;
+
+    Order.cr
+
+    res.send(req.body)
+})
 
 shopRouter.get('/:productline', (req, res) => {
     const productline = req.params.productline;

@@ -21,15 +21,7 @@
 
 	<section class="cart_items">
 		<div class="container">
-			<div class="breadcrumbs">
-				<ol class="breadcrumb">
-					<li>
-						<a href="#">Home</a>
-					</li>
-					<li class="active">Shopping Cart</li>
-				</ol>
-			</div>
-			<form action="/shop/cart" method="POST">
+			<br>
 			<div class="col-md-8 cart-list-product">
 				<div class="table-responsive cart_info">
 					<table class="table table-condensed">
@@ -103,16 +95,16 @@
 							<span><%= cart.totalPrice %></span>
 						</li>
 					</ul>
-					<button type="submit" class="btn btn-w-m btn-warning">Check Out</button>
-					
+
+					<a href="/shop/checkout/" class="btn btn-default check_out" type="button">Check Out</a>
 				</div>
 			</div>
-		</form>
 		</div>
 	</section>
 	<!--/#cart_items-->
 
-
+	<br>
+	<br>
 
 	<footer id="footer">
 		<!--Footer-->
@@ -125,18 +117,6 @@
 			function plus(id) {
 				var count = document.getElementById(id).value;
 				document.getElementById(id).value = count + 1;
-			}
-
-			function increaseItem() {
-				console.log('clicked')
-				$.ajax({
-					type: 'GET',
-					url: 'http://localhost:3000/shop/add-to-cart/'
-				})
-			}
-
-			function decreaseItem() {
-
 			}
 		</script>
 </body>
