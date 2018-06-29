@@ -67,17 +67,12 @@ shopRouter.get('/delete-in-cart/:id', (req, res) => {
     res.redirect('/shop/cart');
 })
 
-shopRouter.post('/cart',
-    isUserLoggedIn,
-    isActiveAccount,
-    (req, res) => {
-        console.log(req.isAuthenticated());
-        res.render('page/cart' , { isLogin: req.isAuthenticated()});
-});
-
 shopRouter.get('/checkout', (req, res) => {
-    console.log("cardsadsadsadsadsat");
-    res.render('page/checkout');
+    res.render('page/checkout', { 
+        cart: req.session.cart ,
+        isLogin: req.isAuthenticated(),
+        user: req.user,
+    });
 });
 
 shopRouter.get('/:productline', (req, res) => {

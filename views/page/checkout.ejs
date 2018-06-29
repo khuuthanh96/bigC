@@ -10,20 +10,16 @@
 
 <body>
     <header>
+		<% include ../partials/header %>
         
     </header>
     <!--/header-->
 
     <section class="checkout">
         <div class="container">
-            <div class="breadcrumbs">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="active">Shopping Cart</li>
-                </ol>
-            </div>
+            <br>
+            <form action="" method="">
+
             <div class="col-md-6">
                 <div class="delivery-method order-box">
                     <div class="delivery-method__title">
@@ -66,7 +62,6 @@
             </div>
             <div class="col-md-6 oder-sumary order-box">
 
-                <form action="" method="">
                     <div class="order-sumary__title">
                         <h2 class="text-uppercase">Shipping & billing</h2>
                     </div>
@@ -104,8 +99,10 @@
                     </div>
                     
                     <button data-toggle="button" class="btn btn-primary" type="submit">Submit</button>
-                </form>
             </div>
+
+        </form>
+
         </div>
     </section>
     <!--/#cart_items-->
