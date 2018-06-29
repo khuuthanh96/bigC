@@ -5,7 +5,7 @@ const ProductLines = require('../model/ProductLines');
 const app = express();
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.redirect('/shop');
+  res.redirect('/home');
 });
 
 // router.get('/test', (req, res) => {
