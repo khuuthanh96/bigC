@@ -47,9 +47,10 @@
             </div>
             <div class="home-menu">
                 <ul>
-                        <a href=""><li>Shirt</li></a>
-                        <a href=""><li>Pants</li></a>
-                        <a href=""><li>Skirt</li></a>
+                    <% for (let i = 0; i < category.length; i++) { %>
+                        <a href="/shop/<%= category[i].name %>/1" class="text-capitalize"><li><%= category[i].name %></li></a>
+                        <% }; %>
+                        
                         <a href="/user/login"><li>Login</li></a>
                         <a href="/user/login"><li>Register</li></a>
                 </ul>
@@ -97,34 +98,25 @@
             <section>
                 <div class="clearfix home-categories">
                     <div class="home-categories__inner">
+                            <% for (let i = 0; i < 3; i++) { %>
                         <div class="col-md-4 home-cate">
                             <div class="home-cate__inner">
                                 <span class="home-cate__bg" style="background-image: url(/images/home/somi.jpg)"></span>
-                                <a href="">
-                                    <span class="home-cate__title">Shirt</span>
+                                <a href="/shop/<%= category[i].name %>/1">
+                                    <span class="home-cate__title text-capitalize"><%= category[i].name %></span>
                                 </a>
     
                             </div>
                         </div>
-                        <div class="col-md-4 home-cate">
-                            <div class="home-cate__inner">
-                                <span class="home-cate__bg" style="background-image: url(/images/home/somi.jpg)"></span>
-                                <a href="">
-                                    <span class="home-cate__title">Shirt</span>
-                                </a>
-    
-                            </div>
-                        </div>
-                        <div class="col-md-4 home-cate">
-                            <div class="home-cate__inner">
-                                <span class="home-cate__bg" style="background-image: url(/images/home/somi.jpg)"></span>
-                                <a href="">
-                                    <span class="home-cate__title">Shirt</span>
-                                </a>
-    
-                            </div>
-                        </div>
+                        <% }; %>
+                        
                     </div>
+                </div>
+            </section>
+            <section class="es-banner">
+                <span class="es-banner__bg" style="background-image: url(/images/home/banner.jpg"></span>
+                <div class="es-banner__quote" >
+                    <p class="text-uppercase text-center">"sống theo cách của eshopper - lịch sự, bảnh bao, nhã nhặn"</p>
                 </div>
             </section>
             
@@ -139,8 +131,8 @@
         </div>
     
         <script src="/javascripts/jquery-3.3.1.min.js"></script>
-        <script src="/javascripts/bootstrap.min.js"></script>
-    
+        <script src="/javascripts/bootstrap-3.3.7.min.js"></script>
+        <script src="/javascripts/owl.carousel.min.js"></script>
     
     
     </body></html>
